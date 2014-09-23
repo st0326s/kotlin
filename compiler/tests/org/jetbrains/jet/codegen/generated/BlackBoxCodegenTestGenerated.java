@@ -2606,11 +2606,32 @@ public class BlackBoxCodegenTestGenerated extends AbstractBlackBoxCodegenTest {
 
     @TestMetadata("compiler/testData/codegen/box/diagnostics")
     @TestDataPath("$PROJECT_ROOT")
-    @InnerTestClasses({Diagnostics.Functions.class})
+    @InnerTestClasses({Diagnostics.Captured.class, Diagnostics.Functions.class})
     @RunWith(JUnit3RunnerWithInners.class)
     public static class Diagnostics extends AbstractBlackBoxCodegenTest {
         public void testAllFilesPresentInDiagnostics() throws Exception {
             JetTestUtils.assertAllTestsPresentByMetadata(this.getClass(), new File("compiler/testData/codegen/box/diagnostics"), Pattern.compile("^(.+)\\.kt$"), true);
+        }
+
+        @TestMetadata("compiler/testData/codegen/box/diagnostics/captured")
+        @TestDataPath("$PROJECT_ROOT")
+        @RunWith(JUnit3RunnerWithInners.class)
+        public static class Captured extends AbstractBlackBoxCodegenTest {
+            public void testAllFilesPresentInCaptured() throws Exception {
+                JetTestUtils.assertAllTestsPresentByMetadata(this.getClass(), new File("compiler/testData/codegen/box/diagnostics/captured"), Pattern.compile("^(.+)\\.kt$"), true);
+            }
+
+            @TestMetadata("capturedType.kt")
+            public void testCapturedType() throws Exception {
+                String fileName = JetTestUtils.navigationMetadata("compiler/testData/codegen/box/diagnostics/captured/capturedType.kt");
+                doTest(fileName);
+            }
+
+            @TestMetadata("capturedTypeAndApproximation.kt")
+            public void testCapturedTypeAndApproximation() throws Exception {
+                String fileName = JetTestUtils.navigationMetadata("compiler/testData/codegen/box/diagnostics/captured/capturedTypeAndApproximation.kt");
+                doTest(fileName);
+            }
         }
 
         @TestMetadata("compiler/testData/codegen/box/diagnostics/functions")

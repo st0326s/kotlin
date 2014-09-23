@@ -19,9 +19,11 @@ package org.jetbrains.jet.lang.types;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.jet.lang.descriptors.TypeParameterDescriptor;
+import org.jetbrains.jet.lang.resolve.calls.inference.CapturedTypeConstructor;
 import org.jetbrains.jet.lang.resolve.scopes.SubstitutingScope;
 import org.jetbrains.jet.lang.types.lang.KotlinBuiltIns;
 import org.jetbrains.jet.lang.types.typeUtil.TypeUtilPackage;
+import org.jetbrains.jet.lang.types.typesApproximation.TypesApproximationPackage;
 
 import java.util.*;
 
@@ -60,18 +62,22 @@ public class TypeSubstitutor {
         }
     }
 
+    @NotNull
     public static TypeSubstitutor create(@NotNull TypeSubstitution substitution) {
         return new TypeSubstitutor(substitution);
     }
 
+    @NotNull
     public static TypeSubstitutor create(@NotNull TypeSubstitution... substitutions) {
         return create(new CompositeTypeSubstitution(substitutions));
     }
 
+    @NotNull
     public static TypeSubstitutor create(@NotNull Map<TypeConstructor, TypeProjection> substitutionContext) {
         return create(new MapToTypeSubstitutionAdapter(substitutionContext));
     }
 
+    @NotNull
     public static TypeSubstitutor create(@NotNull JetType context) {
         return create(buildSubstitutionContext(context.getConstructor().getParameters(), context.getArguments()));
     }
@@ -135,6 +141,12 @@ public class TypeSubstitutor {
 
     @Nullable
     public TypeProjection substitute(@NotNull TypeProjection typeProjection) {
+        TypeProjection substitutedTypeProjection = substituteWithoutApproximation(typeProjection);
+        return TypesApproximationPackage.approximateCapturedTypesIfNecessary(substitutedTypeProjection);
+    }
+
+    @Nullable
+    public TypeProjection substituteWithoutApproximation(@NotNull TypeProjection typeProjection) {
         if (isEmpty()) {
             return typeProjection;
         }
@@ -159,14 +171,15 @@ public class TypeSubstitutor {
                     unsafeSubstitute(new TypeProjectionImpl(originalProjectionKind, flexibility.getLowerBound()), recursionDepth + 1);
             TypeProjection substitutedUpper =
                     unsafeSubstitute(new TypeProjectionImpl(originalProjectionKind, flexibility.getUpperBound()), recursionDepth + 1);
-            // todo: projection kind is neglected
-            return new TypeProjectionImpl(originalProjectionKind,
-                                          DelegatingFlexibleType.create(
-                                                  substitutedLower.getType(),
-                                                  substitutedUpper.getType(),
-                                                  flexibility.getExtraCapabilities()
-                                          )
-            );
+
+            Variance substitutedProjectionKind = substitutedLower.getProjectionKind();
+            assert (substitutedProjectionKind == substitutedUpper.getProjectionKind()) &&
+                   originalProjectionKind == Variance.INVARIANT || originalProjectionKind == substitutedProjectionKind :
+                    "Unexpected substituted projection kind: " + substitutedProjectionKind + "; original: " + originalProjectionKind;
+
+            JetType substitutedFlexibleType = DelegatingFlexibleType.create(
+                    substitutedLower.getType(), substitutedUpper.getType(), flexibility.getExtraCapabilities());
+            return new TypeProjectionImpl(substitutedProjectionKind, substitutedFlexibleType);
         }
 
         if (KotlinBuiltIns.isNothing(type) || type.isError()) return originalProjection;
@@ -174,6 +187,12 @@ public class TypeSubstitutor {
         TypeProjection replacement = substitution.get(type.getConstructor());
 
         if (replacement != null) {
+            if (type.getConstructor() instanceof CapturedTypeConstructor) {
+                if (type.isMarkedNullable()) {
+                    return new TypeProjectionImpl(replacement.getProjectionKind(), TypeUtils.makeNullable(replacement.getType()));
+                }
+                return replacement;
+            }
             // It must be a type parameter: only they can be directly substituted for
             TypeParameterDescriptor typeParameter = (TypeParameterDescriptor) type.getConstructor().getDeclarationDescriptor();
 
@@ -199,6 +218,10 @@ public class TypeSubstitutor {
                 default:
                     throw new IllegalStateException();
             }
+        }
+        if (type.getConstructor().getDeclarationDescriptor() instanceof TypeParameterDescriptor) {
+            // substitution can't change type parameter
+            return originalProjection;
         }
         // The type is not within the substitution range, i.e. Foo, Bar<T> etc.
         return substituteCompoundType(type, originalProjectionKind, recursionDepth);
@@ -265,10 +288,12 @@ public class TypeSubstitutor {
         return substitutedArguments;
     }
 
-    private static Variance combine(Variance typeParameterVariance, Variance projectionKind) {
+    @NotNull
+    public static Variance combine(@NotNull Variance typeParameterVariance, @NotNull Variance projectionKind) {
         if (typeParameterVariance == Variance.INVARIANT) return projectionKind;
         if (projectionKind == Variance.INVARIANT) return typeParameterVariance;
         if (typeParameterVariance == projectionKind) return projectionKind;
+        //todo ask why?
         return Variance.IN_VARIANCE;
     }
 

@@ -1,0 +1,4 @@
+package
+
+internal fun box(): kotlin.String
+internal fun </*0*/ T> foo(/*0*/ a: kotlin.MutableList<T>): kotlin.MutableList<kotlin.MutableList<T>>
