@@ -5106,6 +5106,18 @@ public class JetDiagnosticsTestGenerated extends AbstractJetDiagnosticsTest {
                     doTest(fileName);
                 }
 
+                @TestMetadata("captureFromNullableTypeVariable.kt")
+                public void testCaptureFromNullableTypeVariable() throws Exception {
+                    String fileName = JetTestUtils.navigationMetadata("compiler/testData/diagnostics/tests/inference/capturedTypes/captureFromNullableTypeVariable.kt");
+                    doTest(fileName);
+                }
+
+                @TestMetadata("captureTypeOnlyOnTopLevel.kt")
+                public void testCaptureTypeOnlyOnTopLevel() throws Exception {
+                    String fileName = JetTestUtils.navigationMetadata("compiler/testData/diagnostics/tests/inference/capturedTypes/captureTypeOnlyOnTopLevel.kt");
+                    doTest(fileName);
+                }
+
                 @TestMetadata("kt2570.kt")
                 public void testKt2570() throws Exception {
                     String fileName = JetTestUtils.navigationMetadata("compiler/testData/diagnostics/tests/inference/capturedTypes/kt2570.kt");
@@ -5115,12 +5127,6 @@ public class JetDiagnosticsTestGenerated extends AbstractJetDiagnosticsTest {
                 @TestMetadata("kt2872.kt")
                 public void testKt2872() throws Exception {
                     String fileName = JetTestUtils.navigationMetadata("compiler/testData/diagnostics/tests/inference/capturedTypes/kt2872.kt");
-                    doTest(fileName);
-                }
-
-                @TestMetadata("captureTypeOnlyOnTopLevel.kt")
-                public void testCaptureTypeOnlyOnTopLevel() throws Exception {
-                    String fileName = JetTestUtils.navigationMetadata("compiler/testData/diagnostics/tests/inference/capturedTypes/captureTypeOnlyOnTopLevel.kt");
                     doTest(fileName);
                 }
             }
