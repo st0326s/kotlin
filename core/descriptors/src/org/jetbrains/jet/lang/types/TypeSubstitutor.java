@@ -18,8 +18,8 @@ package org.jetbrains.jet.lang.types;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.jetbrains.jet.lang.descriptors.ClassifierDescriptor;
 import org.jetbrains.jet.lang.descriptors.TypeParameterDescriptor;
-import org.jetbrains.jet.lang.resolve.calls.inference.CapturedTypeConstructor;
 import org.jetbrains.jet.lang.resolve.scopes.SubstitutingScope;
 import org.jetbrains.jet.lang.types.lang.KotlinBuiltIns;
 import org.jetbrains.jet.lang.types.typeUtil.TypeUtilPackage;
@@ -186,22 +186,16 @@ public class TypeSubstitutor {
 
         TypeProjection replacement = substitution.get(type.getConstructor());
 
+        ClassifierDescriptor declarationDescriptor = type.getConstructor().getDeclarationDescriptor();
         if (replacement != null) {
-            if (type.getConstructor() instanceof CapturedTypeConstructor) {
-                if (type.isMarkedNullable()) {
-                    return new TypeProjectionImpl(replacement.getProjectionKind(), TypeUtils.makeNullable(replacement.getType()));
-                }
-                return replacement;
-            }
-            // It must be a type parameter: only they can be directly substituted for
-            TypeParameterDescriptor typeParameter = (TypeParameterDescriptor) type.getConstructor().getDeclarationDescriptor();
-
             switch (conflictType(originalProjectionKind, replacement.getProjectionKind())) {
                 case OUT_IN_IN_POSITION:
                     throw new SubstitutionException("Out-projection in in-position");
                 case IN_IN_OUT_POSITION:
-                    //noinspection ConstantConditions
-                    return TypeUtils.makeStarProjection(typeParameter);
+                    if (declarationDescriptor instanceof TypeParameterDescriptor) {
+                        return TypeUtils.makeStarProjection((TypeParameterDescriptor) declarationDescriptor);
+                    }
+                    throw new SubstitutionException("In-projection in out-position is allowed only for type parameter");
                 case NO_CONFLICT:
                     JetType substitutedType;
                     CustomTypeVariable typeVariable = TypesPackage.getCustomTypeVariable(type);
@@ -210,7 +204,7 @@ public class TypeSubstitutor {
                     }
                     else {
                         // this is a simple type T or T?: if it's T, we should just take replacement, if T? - we make replacement nullable
-                        substitutedType = type.isMarkedNullable() ? TypeUtils.makeNullable(replacement.getType()) : replacement.getType();
+                        substitutedType = TypeUtils.makeNullableIfNeeded(replacement.getType(), type.isMarkedNullable());
                     }
 
                     Variance resultingProjectionKind = combine(originalProjectionKind, replacement.getProjectionKind());
@@ -219,7 +213,7 @@ public class TypeSubstitutor {
                     throw new IllegalStateException();
             }
         }
-        if (type.getConstructor().getDeclarationDescriptor() instanceof TypeParameterDescriptor) {
+        if (declarationDescriptor instanceof TypeParameterDescriptor) {
             // substitution can't change type parameter
             return originalProjection;
         }
