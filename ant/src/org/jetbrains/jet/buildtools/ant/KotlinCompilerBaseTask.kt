@@ -21,22 +21,43 @@ import org.apache.tools.ant.types.Path
 import org.apache.tools.ant.types.Reference
 import java.io.File
 import org.apache.tools.ant.BuildException
-import org.jetbrains.jet.cli.common.ExitCode
-import org.jetbrains.jet.cli.common.arguments.CommonCompilerArguments
-import org.jetbrains.jet.cli.common.CLICompiler
 import org.apache.tools.ant.types.Commandline
-import com.sampullara.cli.Args
-import org.jetbrains.jet.cli.common.messages.PrintingMessageCollector
-import org.jetbrains.jet.cli.common.messages.MessageRenderer
-import org.jetbrains.jet.config.Services
+import java.io.PrintStream
+import org.apache.tools.ant.AntClassLoader
+import java.lang.ref.SoftReference
+import org.apache.tools.ant.Project
+
+object CompilerClassLoaderHolder {
+    private var classLoaderRef = SoftReference<ClassLoader?>(null)
+
+    fun getOrCreateClassLoader(project: Project?): ClassLoader {
+        val cached = classLoaderRef.get()
+        if (cached != null) return cached
+
+        val myLoader = javaClass.getClassLoader()
+        if (myLoader !is AntClassLoader) return myLoader
+
+        // TODO: read all jars, find the one that contains our classes, find kotlin-compiler.jar nearby
+        // Finding the jar simply by name "kotlin-ant.jar" is not perfect because it may have been renamed
+        val classpathElements = myLoader.getClasspath().split(File.pathSeparator)
+        val antTaskJarPath = classpathElements.firstOrNull { it.endsWith("kotlin-ant.jar") }
+                             ?: throw BuildException("Kotlin compiler should be launched from kotlin-ant.jar")
+        val compilerJarPath = File(File(antTaskJarPath).getParent(), "kotlin-compiler.jar")
+        val classLoader = AntClassLoader(myLoader, project, Path(project, compilerJarPath.path), /* parentFirst = */ false)
+        classLoaderRef = SoftReference(classLoader)
+
+        return classLoader
+    }
+}
 
 /**
  * Base class for Kotlin compiler Ant tasks.
  * http://evgeny-goldin.org/javadoc/ant/tutorial-writing-tasks.html
  */
-public abstract class KotlinCompilerBaseTask<T : CommonCompilerArguments> : Task() {
-    protected abstract val arguments: T
-    protected abstract val compiler: CLICompiler<T>
+public abstract class KotlinCompilerBaseTask : Task() {
+    protected abstract val compilerFqName: String
+
+    protected val args: MutableList<String> = arrayListOf()
 
     public var src: Path? = null
     public var output: File? = null
@@ -73,21 +94,15 @@ public abstract class KotlinCompilerBaseTask<T : CommonCompilerArguments> : Task
 
     private fun fillArguments() {
         val sourcePaths = src ?: throw BuildException("\"src\" should be specified")
-        arguments.freeArgs = sourcePaths.list().map { File(it).canonicalPath }
+        args.addAll(sourcePaths.list().map { File(it).canonicalPath })
 
         output ?: throw BuildException("\"output\" should be specified")
 
-        arguments.suppressWarnings = nowarn
-        arguments.verbose = verbose
-        arguments.version = printVersion
+        if (nowarn) args.add("-nowarn")
+        if (verbose) args.add("-verbose")
+        if (printVersion) args.add("-version")
 
-        val args = additionalArguments.flatMap { it.getParts().toList() }
-        try {
-            Args.parse(arguments, args.copyToArray())
-        }
-        catch (e: IllegalArgumentException) {
-            throw BuildException(e.getMessage())
-        }
+        args.addAll(additionalArguments.flatMap { it.getParts().toList() })
 
         fillSpecificArguments()
     }
@@ -95,13 +110,17 @@ public abstract class KotlinCompilerBaseTask<T : CommonCompilerArguments> : Task
     final override fun execute() {
         fillArguments()
 
-        log("Compiling ${arguments.freeArgs} => [${output!!.canonicalPath}]");
+        val compilerClass = CompilerClassLoaderHolder.getOrCreateClassLoader(project).loadClass(compilerFqName)
+        val compiler = compilerClass.newInstance()
+        val exec = compilerClass.getMethod("execFullPaths", javaClass<PrintStream>(), javaClass<Array<String>>())
 
-        val collector = PrintingMessageCollector(System.err, MessageRenderer.PLAIN, arguments.verbose)
-        val exitCode = compiler.exec(collector, Services.EMPTY, arguments)
+        log("Compiling ${src!!.list().toList()} => [${output!!.canonicalPath}]");
 
-        if (exitCode != ExitCode.OK) {
-            throw BuildException("Compilation finished with exit code $exitCode")
+        val exitCode = exec(compiler, System.err, args.copyToArray())
+
+        // TODO: support failOnError attribute of javac
+        if ((exitCode as Enum<*>).ordinal() != 0) {
+            throw BuildException("Compile failed; see the compiler error output for details.")
         }
     }
 }
