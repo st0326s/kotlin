@@ -166,7 +166,7 @@ public class JetPositionManager implements PositionManager {
     @Override
     public List<ReferenceType> getAllClasses(SourcePosition sourcePosition) throws NoDataException {
         if (!(sourcePosition.getFile() instanceof JetFile)) {
-            throw new NoDataException();
+            throw NoDataException.INSTANCE;
         }
         String name = classNameForPosition(sourcePosition);
         List<ReferenceType> result = new ArrayList<ReferenceType>();
@@ -187,7 +187,8 @@ public class JetPositionManager implements PositionManager {
                 JetFile file = (JetFile) sourcePosition.getFile();
                 boolean isInLibrary = LibraryUtil.findLibraryEntry(file.getVirtualFile(), file.getProject()) != null;
                 JetTypeMapper typeMapper = !isInLibrary ? prepareTypeMapper(file) : createTypeMapperForLibraryFile(sourcePosition.getElementAt(), file);
-                result.set(getClassNameForElement(sourcePosition.getElementAt(), typeMapper, file, isInLibrary));
+                String element = getClassNameForElement(sourcePosition.getElementAt(), typeMapper, file, isInLibrary);
+                result.set(element);
             }
 
         });
@@ -353,7 +354,7 @@ public class JetPositionManager implements PositionManager {
         try {
             int line = position.getLine() + 1;
             List<Location> locations = myDebugProcess.getVirtualMachineProxy().versionHigher("1.4")
-                                       ? type.locationsOfLine(DebugProcess.JAVA_STRATUM, null, line)
+                                       ? type.locationsOfLine("Java", null, line)
                                        : type.locationsOfLine(line);
             if (locations == null || locations.isEmpty()) throw new NoDataException();
             return locations;
