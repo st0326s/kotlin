@@ -1,7 +1,7 @@
 class Cov<out T>
 class Inv<T>
 
-fun foo<T>(a: Cov<Inv<T>>) {}
+fun foo<T>(): Cov<Inv<T>> = throw Exception()
 
 // T captures 'in Int'
 // lower: Cov<Nothing>

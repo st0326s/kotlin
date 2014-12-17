@@ -48,7 +48,7 @@ abstract public class AbstractCapturedTypeApproximationTest() : JetLiteFixture()
         val functionFoo = functions.values().firstOrNull { it.getName().asString() == "foo" } ?:
                           throw AssertionError("Function 'foo' is not declared")
         val typeParameter = functionFoo.getTypeParameters().first()
-        val parameter = functionFoo.getValueParameters().first().getType()
+        val parameter = functionFoo.getReturnType()
 
         val result = StringBuilder {
             val endIndex = text.indexOf("// T captures")

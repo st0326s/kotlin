@@ -30,63 +30,73 @@ import java.util.regex.Pattern;
 @SuppressWarnings("all")
 @TestMetadata("compiler/testData/capturedTypeApproximation")
 @TestDataPath("$PROJECT_ROOT")
+@InnerTestClasses({CapturedTypeApproximationTestGenerated.Approximation.class})
 @RunWith(JUnit3RunnerWithInners.class)
 public class CapturedTypeApproximationTestGenerated extends AbstractCapturedTypeApproximationTest {
     public void testAllFilesPresentInCapturedTypeApproximation() throws Exception {
         JetTestUtils.assertAllTestsPresentByMetadata(this.getClass(), new File("compiler/testData/capturedTypeApproximation"), Pattern.compile("^(.+)\\.kt$"), true);
     }
 
-    @TestMetadata("contravariant.kt")
-    public void testContravariant() throws Exception {
-        String fileName = JetTestUtils.navigationMetadata("compiler/testData/capturedTypeApproximation/contravariant.kt");
-        doTest(fileName);
-    }
+    @TestMetadata("compiler/testData/capturedTypeApproximation/approximation")
+    @TestDataPath("$PROJECT_ROOT")
+    @RunWith(JUnit3RunnerWithInners.class)
+    public static class Approximation extends AbstractCapturedTypeApproximationTest {
+        public void testAllFilesPresentInApproximation() throws Exception {
+            JetTestUtils.assertAllTestsPresentByMetadata(this.getClass(), new File("compiler/testData/capturedTypeApproximation/approximation"), Pattern.compile("^(.+)\\.kt$"), true);
+        }
 
-    @TestMetadata("covariant.kt")
-    public void testCovariant() throws Exception {
-        String fileName = JetTestUtils.navigationMetadata("compiler/testData/capturedTypeApproximation/covariant.kt");
-        doTest(fileName);
-    }
+        @TestMetadata("contravariant.kt")
+        public void testContravariant() throws Exception {
+            String fileName = JetTestUtils.navigationMetadata("compiler/testData/capturedTypeApproximation/approximation/contravariant.kt");
+            doTest(fileName);
+        }
 
-    @TestMetadata("invariant.kt")
-    public void testInvariant() throws Exception {
-        String fileName = JetTestUtils.navigationMetadata("compiler/testData/capturedTypeApproximation/invariant.kt");
-        doTest(fileName);
-    }
+        @TestMetadata("covariant.kt")
+        public void testCovariant() throws Exception {
+            String fileName = JetTestUtils.navigationMetadata("compiler/testData/capturedTypeApproximation/approximation/covariant.kt");
+            doTest(fileName);
+        }
 
-    @TestMetadata("nestedCov.kt")
-    public void testNestedCov() throws Exception {
-        String fileName = JetTestUtils.navigationMetadata("compiler/testData/capturedTypeApproximation/nestedCov.kt");
-        doTest(fileName);
-    }
+        @TestMetadata("invariant.kt")
+        public void testInvariant() throws Exception {
+            String fileName = JetTestUtils.navigationMetadata("compiler/testData/capturedTypeApproximation/approximation/invariant.kt");
+            doTest(fileName);
+        }
 
-    @TestMetadata("nestedInv.kt")
-    public void testNestedInv() throws Exception {
-        String fileName = JetTestUtils.navigationMetadata("compiler/testData/capturedTypeApproximation/nestedInv.kt");
-        doTest(fileName);
-    }
+        @TestMetadata("nestedCov.kt")
+        public void testNestedCov() throws Exception {
+            String fileName = JetTestUtils.navigationMetadata("compiler/testData/capturedTypeApproximation/approximation/nestedCov.kt");
+            doTest(fileName);
+        }
 
-    @TestMetadata("nestedInvLevel2.kt")
-    public void testNestedInvLevel2() throws Exception {
-        String fileName = JetTestUtils.navigationMetadata("compiler/testData/capturedTypeApproximation/nestedInvLevel2.kt");
-        doTest(fileName);
-    }
+        @TestMetadata("nestedInv.kt")
+        public void testNestedInv() throws Exception {
+            String fileName = JetTestUtils.navigationMetadata("compiler/testData/capturedTypeApproximation/approximation/nestedInv.kt");
+            doTest(fileName);
+        }
 
-    @TestMetadata("nullableTypeVariable.kt")
-    public void testNullableTypeVariable() throws Exception {
-        String fileName = JetTestUtils.navigationMetadata("compiler/testData/capturedTypeApproximation/nullableTypeVariable.kt");
-        doTest(fileName);
-    }
+        @TestMetadata("nestedInvLevel2.kt")
+        public void testNestedInvLevel2() throws Exception {
+            String fileName = JetTestUtils.navigationMetadata("compiler/testData/capturedTypeApproximation/approximation/nestedInvLevel2.kt");
+            doTest(fileName);
+        }
 
-    @TestMetadata("useSiteVarianceIn.kt")
-    public void testUseSiteVarianceIn() throws Exception {
-        String fileName = JetTestUtils.navigationMetadata("compiler/testData/capturedTypeApproximation/useSiteVarianceIn.kt");
-        doTest(fileName);
-    }
+        @TestMetadata("nullableTypeVariable.kt")
+        public void testNullableTypeVariable() throws Exception {
+            String fileName = JetTestUtils.navigationMetadata("compiler/testData/capturedTypeApproximation/approximation/nullableTypeVariable.kt");
+            doTest(fileName);
+        }
 
-    @TestMetadata("useSiteVarianceOut.kt")
-    public void testUseSiteVarianceOut() throws Exception {
-        String fileName = JetTestUtils.navigationMetadata("compiler/testData/capturedTypeApproximation/useSiteVarianceOut.kt");
-        doTest(fileName);
+        @TestMetadata("useSiteVarianceIn.kt")
+        public void testUseSiteVarianceIn() throws Exception {
+            String fileName = JetTestUtils.navigationMetadata("compiler/testData/capturedTypeApproximation/approximation/useSiteVarianceIn.kt");
+            doTest(fileName);
+        }
+
+        @TestMetadata("useSiteVarianceOut.kt")
+        public void testUseSiteVarianceOut() throws Exception {
+            String fileName = JetTestUtils.navigationMetadata("compiler/testData/capturedTypeApproximation/approximation/useSiteVarianceOut.kt");
+            doTest(fileName);
+        }
     }
 }

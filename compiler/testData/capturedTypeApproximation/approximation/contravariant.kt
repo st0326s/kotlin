@@ -1,6 +1,6 @@
 class Contr<in T>
 
-fun foo<T>(a: Contr<T>) {}
+fun foo<T>(): Contr<T> = throw Exception()
 
 // T captures 'in Int'
 // lower: Contr<Any?>

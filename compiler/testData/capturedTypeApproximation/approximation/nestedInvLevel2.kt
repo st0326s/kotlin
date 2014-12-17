@@ -1,6 +1,6 @@
 class Inv<T>
 
-fun foo<T>(a: Inv<Inv<Inv<T>>>) {}
+fun foo<T>(): Inv<Inv<Inv<T>>> = throw Exception()
 
 // T captures 'in Int'
 // lower: Nothing
