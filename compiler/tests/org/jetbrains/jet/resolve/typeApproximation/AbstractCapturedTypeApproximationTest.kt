@@ -35,14 +35,17 @@ import org.jetbrains.jet.lang.types.JetTypeImpl
 import org.jetbrains.jet.lang.resolve.calls.inference.createCapturedType
 
 abstract public class AbstractCapturedTypeApproximationTest() : JetLiteFixture() {
-    override fun createEnvironment(): JetCoreEnvironment = createEnvironmentWithMockJdk(ConfigurationKind.ALL)
+    override fun createEnvironment(): JetCoreEnvironment = createEnvironmentWithMockJdk(ConfigurationKind.JDK_ONLY)
 
     public fun doTest(filePath: String) {
         val file = File(filePath)
         val text = JetTestUtils.doLoadFile(file)!!
+        if (text.startsWith("// declarations")) return
 
-        val jetFile = JetPsiFactory(getProject()).createFile(text)
-        val bindingContext = JvmResolveUtil.analyzeOneFileWithJavaIntegration(jetFile).bindingContext
+        val declarationsFile = JetTestUtils.loadJetFile(getProject(), File("compiler/testData/capturedTypeApproximation/declarations.kt"))
+
+        val testFile = JetPsiFactory(getProject()).createFile(text)
+        val bindingContext = JvmResolveUtil.analyzeFilesWithJavaIntegration(getProject(), listOf(declarationsFile, testFile), { true }).bindingContext
 
         val functions = bindingContext.getSliceContents(BindingContext.FUNCTION)
         val functionFoo = functions.values().firstOrNull { it.getName().asString() == "foo" } ?:

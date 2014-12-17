@@ -1,6 +1,4 @@
-class Cov<out T>
-
-fun foo<T>(): Cov<T> = throw Exception()
+fun foo<T>(): Cov<T?> = throw Exception()
 
 // T captures 'in Int'
 // lower: Cov<Int>

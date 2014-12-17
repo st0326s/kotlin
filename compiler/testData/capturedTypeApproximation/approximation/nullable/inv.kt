@@ -1,5 +1,3 @@
-class Inv<T>
-
 fun foo<T>(): Inv<T?> = throw Exception()
 
 // T captures 'in Int'

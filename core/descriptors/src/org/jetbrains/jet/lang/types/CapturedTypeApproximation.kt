@@ -61,7 +61,7 @@ private fun TypeArgument.toTypeProjection(): TypeProjection {
         (inProjection == NOTHING || inProjection == NULLABLE_NOTHING) && typeParameter.getVariance() != Variance.IN_VARIANCE ->
             TypeProjectionImpl(removeProjectionIfRedundant(Variance.OUT_VARIANCE), outProjection)
         outProjection == NULLABLE_ANY -> TypeProjectionImpl(removeProjectionIfRedundant(Variance.IN_VARIANCE), inProjection)
-        else -> throw AssertionError("Enhanced type projection can't be converted to type projection: $this")
+        else -> TypeProjectionImpl(removeProjectionIfRedundant(Variance.OUT_VARIANCE), outProjection)
     }
 }
 
