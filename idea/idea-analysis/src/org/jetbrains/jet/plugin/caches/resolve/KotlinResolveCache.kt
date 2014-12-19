@@ -66,6 +66,8 @@ import org.jetbrains.jet.lang.resolve.lazy.descriptors.LazyClassDescriptor
 import org.jetbrains.jet.lang.resolve.calls.smartcasts.DataFlowInfo
 import org.jetbrains.jet.lang.resolve.scopes.JetScope
 import org.jetbrains.jet.lang.resolve.lazy.BodyResolveMode
+import org.jetbrains.jet.lang.psi.JetBlockExpression
+import org.jetbrains.jet.lang.psi.JetDeclarationWithBody
 
 public trait CacheExtension<T> {
     public val platform: TargetPlatform
@@ -289,6 +291,17 @@ private object KotlinResolveDataProvider {
 
             scopeForContextElement = descriptor.getScopeForMemberDeclarationResolution()
             dataFlowInfo = DataFlowInfo.EMPTY
+        }
+        else if (contextElement is JetBlockExpression && contextElement.getParent() is JetDeclarationWithBody) {
+            val body = (contextElement.getParent() as JetDeclarationWithBody).getBodyExpression() as JetBlockExpression
+
+            val newContextElement = body.getStatements().lastOrNull()
+            if (newContextElement !is JetExpression) return BindingContext.EMPTY
+
+            val contextForElement = newContextElement.getResolutionFacade().analyze(newContextElement, BodyResolveMode.FULL)
+
+            scopeForContextElement = contextForElement[BindingContext.RESOLUTION_SCOPE, newContextElement]
+            dataFlowInfo = contextForElement.getDataFlowInfo(newContextElement)
         }
         else {
             if (contextElement !is JetExpression) return BindingContext.EMPTY
