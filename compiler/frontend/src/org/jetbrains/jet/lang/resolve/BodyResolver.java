@@ -577,9 +577,9 @@ public class BodyResolver {
     }
 
     private void resolveFunctionBodies(@NotNull BodiesResolveContext c) {
-        for (Map.Entry<JetNamedFunction, SimpleFunctionDescriptor> entry : c.getFunctions().entrySet()) {
+        for (Map.Entry<JetNamedFunction, ComplexFunctionDescriptor> entry : c.getFunctions().entrySet()) {
             JetNamedFunction declaration = entry.getKey();
-            SimpleFunctionDescriptor descriptor = entry.getValue();
+            ComplexFunctionDescriptor descriptor = entry.getValue();
 
             computeDeferredType(descriptor.getReturnType());
 

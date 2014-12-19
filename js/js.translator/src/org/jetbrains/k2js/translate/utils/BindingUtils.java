@@ -76,7 +76,7 @@ public final class BindingUtils {
     }
 
     @NotNull
-    public static JetFunction getFunctionForDescriptor(@NotNull SimpleFunctionDescriptor descriptor) {
+    public static JetFunction getFunctionForDescriptor(@NotNull ComplexFunctionDescriptor descriptor) {
         PsiElement result = DescriptorToSourceUtils.callableDescriptorToDeclaration(descriptor);
         assert result instanceof JetFunction : message(descriptor, "SimpleFunctionDescriptor should have declaration of type JetFunction");
         return (JetFunction) result;
@@ -235,7 +235,7 @@ public final class BindingUtils {
     }
 
     @Nullable
-    public static SimpleFunctionDescriptor getNullableDescriptorForFunction(@NotNull BindingContext bindingContext,
+    public static ComplexFunctionDescriptor getNullableDescriptorForFunction(@NotNull BindingContext bindingContext,
             @NotNull JetNamedFunction function) {
         return bindingContext.get(BindingContext.FUNCTION, function);
     }

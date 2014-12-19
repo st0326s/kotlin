@@ -2220,7 +2220,7 @@ public class ExpressionCodegen extends JetVisitor<StackValue, StackValue> implem
 
     @NotNull
     private CallableMethod resolveToCallableMethod(@NotNull FunctionDescriptor fd, boolean superCall, @NotNull CodegenContext context) {
-        SimpleFunctionDescriptor originalOfSamAdapter = (SimpleFunctionDescriptor) SamCodegenUtil.getOriginalIfSamAdapter(fd);
+        ComplexFunctionDescriptor originalOfSamAdapter = (ComplexFunctionDescriptor) SamCodegenUtil.getOriginalIfSamAdapter(fd);
         return typeMapper.mapToCallableMethod(originalOfSamAdapter != null ? originalOfSamAdapter : fd, superCall, context);
     }
 
@@ -2287,12 +2287,12 @@ public class ExpressionCodegen extends JetVisitor<StackValue, StackValue> implem
         // We should inline callable containing reified type parameters even if inline is disabled
         // because they may contain something to reify and straight call will probably fail at runtime
         boolean isInline = (state.isInlineEnabled() || DescriptorUtils.containsReifiedTypeParameters(descriptor)) &&
-                           descriptor instanceof SimpleFunctionDescriptor &&
-                           ((SimpleFunctionDescriptor) descriptor).getInlineStrategy().isInline();
+                           descriptor instanceof ComplexFunctionDescriptor &&
+                           ((ComplexFunctionDescriptor) descriptor).getInlineStrategy().isInline();
 
         if (!isInline) return defaultCallGenerator;
 
-        SimpleFunctionDescriptor original = DescriptorUtils.unwrapFakeOverride((SimpleFunctionDescriptor) descriptor.getOriginal());
+        ComplexFunctionDescriptor original = DescriptorUtils.unwrapFakeOverride((ComplexFunctionDescriptor) descriptor.getOriginal());
         return new InlineCodegen(this, state, original, callElement, reifierTypeParameterMappings);
     }
 

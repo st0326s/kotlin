@@ -63,7 +63,7 @@ public class BindingContextUtils {
     }
 
     public static void recordFunctionDeclarationToDescriptor(@NotNull BindingTrace trace,
-            @NotNull PsiElement psiElement, @NotNull SimpleFunctionDescriptor function) {
+            @NotNull PsiElement psiElement, @NotNull ComplexFunctionDescriptor function) {
 
         if (function.getKind() != DECLARATION) {
             throw new IllegalArgumentException("function of kind " + function.getKind() + " cannot have declaration");

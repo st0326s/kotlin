@@ -19,7 +19,7 @@ package org.jetbrains.jet.lang.descriptors.impl;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.jet.lang.descriptors.DeclarationDescriptor;
 import org.jetbrains.jet.lang.descriptors.PropertyDescriptor;
-import org.jetbrains.jet.lang.descriptors.SimpleFunctionDescriptor;
+import org.jetbrains.jet.lang.descriptors.ComplexFunctionDescriptor;
 
 public class PackageLikeBuilderDummy implements PackageLikeBuilder {
     @NotNull
@@ -34,7 +34,7 @@ public class PackageLikeBuilderDummy implements PackageLikeBuilder {
     }
 
     @Override
-    public void addFunctionDescriptor(@NotNull SimpleFunctionDescriptor functionDescriptor) {
+    public void addFunctionDescriptor(@NotNull ComplexFunctionDescriptor functionDescriptor) {
         throw new IllegalStateException();
     }
 

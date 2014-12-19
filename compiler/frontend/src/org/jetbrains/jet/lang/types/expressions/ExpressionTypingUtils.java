@@ -187,7 +187,7 @@ public class ExpressionTypingUtils {
         }
 
         CallableDescriptor callable = resolvedCall.getResultingDescriptor();
-        if (callable instanceof SimpleFunctionDescriptor && ((SimpleFunctionDescriptor) callable).getInlineStrategy().isInline()) {
+        if (callable instanceof ComplexFunctionDescriptor && ((ComplexFunctionDescriptor) callable).getInlineStrategy().isInline()) {
             DeclarationDescriptor scopeContainerParent = scopeContainer.getContainingDeclaration();
             assert scopeContainerParent != null : "parent is null for " + scopeContainer;
             return scopeContainerParent == variableParent || isCapturedInInline(context, scopeContainerParent, variableParent);

@@ -26,7 +26,7 @@ import com.intellij.util.IncorrectOperationException;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.jet.lang.descriptors.FunctionDescriptor;
-import org.jetbrains.jet.lang.descriptors.SimpleFunctionDescriptor;
+import org.jetbrains.jet.lang.descriptors.ComplexFunctionDescriptor;
 import org.jetbrains.jet.lang.diagnostics.Diagnostic;
 import org.jetbrains.jet.lang.psi.*;
 import org.jetbrains.jet.lang.resolve.BindingContext;
@@ -202,7 +202,7 @@ public class ChangeFunctionReturnTypeFix extends JetIntentionAction<JetFunction>
                         actions.add(new ChangeFunctionReturnTypeFix(function, matchingReturnType));
                     }
 
-                    SimpleFunctionDescriptor descriptor = context.get(BindingContext.FUNCTION, function);
+                    ComplexFunctionDescriptor descriptor = context.get(BindingContext.FUNCTION, function);
                     if (descriptor == null) return actions;
                     JetType functionType = descriptor.getReturnType();
                     if (functionType == null) return actions;

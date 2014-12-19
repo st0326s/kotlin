@@ -69,8 +69,8 @@ public class InlineDescriptorUtils {
         if (call != null) {
             ResolvedCall<?> resolvedCall = CallUtilPackage.getResolvedCall(call, bindingContext);
             CallableDescriptor resultingDescriptor = resolvedCall == null ? null : resolvedCall.getResultingDescriptor();
-            if (resultingDescriptor instanceof SimpleFunctionDescriptor &&
-                ((SimpleFunctionDescriptor) resultingDescriptor).getInlineStrategy().isInline()) {
+            if (resultingDescriptor instanceof ComplexFunctionDescriptor &&
+                ((ComplexFunctionDescriptor) resultingDescriptor).getInlineStrategy().isInline()) {
                 ValueArgument argument = CallUtilPackage.getValueArgumentForExpression(resolvedCall.getCall(), lambdaExpression);
                 if (argument != null) {
                     ArgumentMapping mapping = resolvedCall.getArgumentMapping(argument);

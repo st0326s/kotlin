@@ -84,7 +84,7 @@ public class GotoSuperActionHandler implements CodeInsightActionHandler {
             if (descriptor instanceof PropertyDescriptor) {
                 message = JetBundle.message("goto.super.property.chooser.title");
             }
-            else if (descriptor instanceof SimpleFunctionDescriptor) {
+            else if (descriptor instanceof ComplexFunctionDescriptor) {
                 message = JetBundle.message("goto.super.function.chooser.title");
             }
             else

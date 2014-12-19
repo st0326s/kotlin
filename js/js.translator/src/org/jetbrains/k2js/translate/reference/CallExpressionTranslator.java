@@ -93,8 +93,8 @@ public final class CallExpressionTranslator extends AbstractCallExpressionTransl
             descriptor = resolvedCall.getCandidateDescriptor();
         }
 
-        if (descriptor instanceof SimpleFunctionDescriptor) {
-            return ((SimpleFunctionDescriptor) descriptor).getInlineStrategy().isInline();
+        if (descriptor instanceof ComplexFunctionDescriptor) {
+            return ((ComplexFunctionDescriptor) descriptor).getInlineStrategy().isInline();
         }
 
         if (descriptor instanceof ValueParameterDescriptor) {

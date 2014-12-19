@@ -298,7 +298,7 @@ public class DeserializedClassDescriptor(
 
             for (supertype in getTypeConstructor().getSupertypes()) {
                 for (descriptor in supertype.getMemberScope().getAllDescriptors()) {
-                    if (descriptor is SimpleFunctionDescriptor || descriptor is PropertyDescriptor) {
+                    if (descriptor is ComplexFunctionDescriptor || descriptor is PropertyDescriptor) {
                         result.add(descriptor.getName())
                     }
                 }

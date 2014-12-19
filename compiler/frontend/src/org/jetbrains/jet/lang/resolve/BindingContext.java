@@ -196,9 +196,9 @@ public interface BindingContext {
     WritableSlice<JetTypeParameter, TypeParameterDescriptor> TYPE_PARAMETER =
             Slices.<JetTypeParameter, TypeParameterDescriptor>sliceBuilder().build();
     /**
-     * @see BindingContextUtils#recordFunctionDeclarationToDescriptor(BindingTrace, PsiElement, SimpleFunctionDescriptor)}
+     * @see BindingContextUtils#recordFunctionDeclarationToDescriptor(BindingTrace, PsiElement, org.jetbrains.jet.lang.descriptors.ComplexFunctionDescriptor)}
      */
-    WritableSlice<PsiElement, SimpleFunctionDescriptor> FUNCTION = Slices.<PsiElement, SimpleFunctionDescriptor>sliceBuilder().build();
+    WritableSlice<PsiElement, ComplexFunctionDescriptor> FUNCTION = Slices.<PsiElement, ComplexFunctionDescriptor>sliceBuilder().build();
     WritableSlice<PsiElement, ConstructorDescriptor> CONSTRUCTOR = Slices.<PsiElement, ConstructorDescriptor>sliceBuilder().build();
     WritableSlice<PsiElement, VariableDescriptor> VARIABLE = Slices.<PsiElement, VariableDescriptor>sliceBuilder().build();
     WritableSlice<JetParameter, VariableDescriptor> VALUE_PARAMETER = Slices.<JetParameter, VariableDescriptor>sliceBuilder().build();

@@ -24,7 +24,7 @@ import org.jetbrains.jet.descriptors.serialization.ProtoBuf;
 import org.jetbrains.jet.descriptors.serialization.SerializationPackage;
 import org.jetbrains.jet.lang.descriptors.DeclarationDescriptor;
 import org.jetbrains.jet.lang.descriptors.FunctionDescriptor;
-import org.jetbrains.jet.lang.descriptors.SimpleFunctionDescriptor;
+import org.jetbrains.jet.lang.descriptors.ComplexFunctionDescriptor;
 import org.jetbrains.jet.lang.descriptors.SourceElement;
 import org.jetbrains.jet.lang.descriptors.annotations.Annotations;
 import org.jetbrains.jet.lang.descriptors.impl.FunctionDescriptorImpl;
@@ -38,7 +38,7 @@ public class DeserializedSimpleFunctionDescriptor extends SimpleFunctionDescript
 
     private DeserializedSimpleFunctionDescriptor(
             @NotNull DeclarationDescriptor containingDeclaration,
-            @Nullable SimpleFunctionDescriptor original,
+            @Nullable ComplexFunctionDescriptor original,
             @NotNull Annotations annotations,
             @NotNull Name name,
             @NotNull Kind kind,

@@ -81,7 +81,7 @@ public abstract class AbstractAnnotationDescriptorResolveTest extends JetLiteFix
         FunctionDescriptor foo = getFunctionDescriptor(myClass, "foo");
         checkAnnotationsOnFunction(expectedAnnotation, foo);
 
-        SimpleFunctionDescriptor anonymousFun = getAnonymousFunDescriptor();
+        ComplexFunctionDescriptor anonymousFun = getAnonymousFunDescriptor();
         if (anonymousFun instanceof AnonymousFunctionDescriptor) {
             for (ValueParameterDescriptor descriptor : anonymousFun.getValueParameters()) {
                 checkDescriptor(expectedAnnotation, descriptor);
@@ -242,8 +242,8 @@ public abstract class AbstractAnnotationDescriptorResolveTest extends JetLiteFix
     }
 
     @NotNull
-    private SimpleFunctionDescriptor getLocalFunDescriptor(@NotNull String name) {
-        for (SimpleFunctionDescriptor descriptor : context.getSliceContents(BindingContext.FUNCTION).values()) {
+    private ComplexFunctionDescriptor getLocalFunDescriptor(@NotNull String name) {
+        for (ComplexFunctionDescriptor descriptor : context.getSliceContents(BindingContext.FUNCTION).values()) {
             if (descriptor.getName().asString().equals(name)) {
                 return descriptor;
             }
@@ -266,8 +266,8 @@ public abstract class AbstractAnnotationDescriptorResolveTest extends JetLiteFix
     }
 
     @NotNull
-    private SimpleFunctionDescriptor getAnonymousFunDescriptor() {
-        for (SimpleFunctionDescriptor descriptor : context.getSliceContents(BindingContext.FUNCTION).values()) {
+    private ComplexFunctionDescriptor getAnonymousFunDescriptor() {
+        for (ComplexFunctionDescriptor descriptor : context.getSliceContents(BindingContext.FUNCTION).values()) {
             if (descriptor instanceof AnonymousFunctionDescriptor) {
                 return descriptor;
             }

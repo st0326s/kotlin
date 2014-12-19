@@ -306,8 +306,8 @@ public class OverridingUtil {
     }
 
     private static boolean isMoreSpecific(@NotNull CallableMemberDescriptor a, @NotNull CallableMemberDescriptor b) {
-        if (a instanceof SimpleFunctionDescriptor) {
-            assert b instanceof SimpleFunctionDescriptor : "b is " + b.getClass();
+        if (a instanceof ComplexFunctionDescriptor) {
+            assert b instanceof ComplexFunctionDescriptor : "b is " + b.getClass();
 
             JetType aReturnType = a.getReturnType();
             assert aReturnType != null;

@@ -182,8 +182,8 @@ public abstract class OverrideImplementMethodsHandler implements LanguageCodeIns
         List<JetElement> overridingMembers = new ArrayList<JetElement>();
         for (DescriptorClassMember selectedElement : selectedElements) {
             DeclarationDescriptor descriptor = selectedElement.getDescriptor();
-            if (descriptor instanceof SimpleFunctionDescriptor) {
-                overridingMembers.add(overrideFunction(classOrObject, (SimpleFunctionDescriptor) descriptor));
+            if (descriptor instanceof ComplexFunctionDescriptor) {
+                overridingMembers.add(overrideFunction(classOrObject, (ComplexFunctionDescriptor) descriptor));
             }
             else if (descriptor instanceof PropertyDescriptor) {
                 overridingMembers.add(overrideProperty(classOrObject, (PropertyDescriptor) descriptor));

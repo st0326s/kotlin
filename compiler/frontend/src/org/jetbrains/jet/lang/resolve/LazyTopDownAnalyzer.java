@@ -374,7 +374,7 @@ public class LazyTopDownAnalyzer {
         for (JetNamedFunction function : functions) {
             c.getFunctions().put(
                     function,
-                    (SimpleFunctionDescriptor) resolveSession.resolveToDescriptor(function)
+                    (ComplexFunctionDescriptor) resolveSession.resolveToDescriptor(function)
             );
             registerScope(c, resolveSession, function);
         }

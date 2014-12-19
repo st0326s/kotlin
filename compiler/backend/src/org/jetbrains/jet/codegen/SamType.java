@@ -18,7 +18,7 @@ package org.jetbrains.jet.codegen;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.jet.lang.descriptors.ClassifierDescriptor;
-import org.jetbrains.jet.lang.descriptors.SimpleFunctionDescriptor;
+import org.jetbrains.jet.lang.descriptors.ComplexFunctionDescriptor;
 import org.jetbrains.jet.lang.resolve.java.descriptor.JavaClassDescriptor;
 import org.jetbrains.jet.lang.resolve.java.sam.SingleAbstractMethodUtils;
 import org.jetbrains.jet.lang.types.JetType;
@@ -54,8 +54,8 @@ public class SamType {
     }
 
     @NotNull
-    public SimpleFunctionDescriptor getAbstractMethod() {
-        return (SimpleFunctionDescriptor) SingleAbstractMethodUtils.getAbstractMembers(type).get(0);
+    public ComplexFunctionDescriptor getAbstractMethod() {
+        return (ComplexFunctionDescriptor) SingleAbstractMethodUtils.getAbstractMembers(type).get(0);
     }
 
     @Override

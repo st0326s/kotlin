@@ -127,8 +127,8 @@ public class OverrideResolver {
                 if (fakeOverride instanceof PropertyDescriptor) {
                     classDescriptor.getBuilder().addPropertyDescriptor((PropertyDescriptor) fakeOverride);
                 }
-                else if (fakeOverride instanceof SimpleFunctionDescriptor) {
-                    classDescriptor.getBuilder().addFunctionDescriptor((SimpleFunctionDescriptor) fakeOverride);
+                else if (fakeOverride instanceof ComplexFunctionDescriptor) {
+                    classDescriptor.getBuilder().addFunctionDescriptor((ComplexFunctionDescriptor) fakeOverride);
                 }
                 else {
                     throw new IllegalStateException(fakeOverride.getClass().getName());
@@ -326,7 +326,7 @@ public class OverrideResolver {
     private static List<CallableMemberDescriptor> getCallableMembersFromType(JetType type) {
         List<CallableMemberDescriptor> r = Lists.newArrayList();
         for (DeclarationDescriptor decl : type.getMemberScope().getAllDescriptors()) {
-            if (decl instanceof PropertyDescriptor || decl instanceof SimpleFunctionDescriptor) {
+            if (decl instanceof PropertyDescriptor || decl instanceof ComplexFunctionDescriptor) {
                 r.add((CallableMemberDescriptor) decl);
             }
         }

@@ -69,14 +69,14 @@ public abstract class LazyJavaMemberScope(
     protected abstract fun computeMemberIndex(): MemberIndex
 
     // Fake overrides, SAM constructors/adapters, values()/valueOf(), etc.
-    protected abstract fun computeNonDeclaredFunctions(result: MutableCollection<SimpleFunctionDescriptor>, name: Name)
+    protected abstract fun computeNonDeclaredFunctions(result: MutableCollection<ComplexFunctionDescriptor>, name: Name)
 
     protected abstract fun getDispatchReceiverParameter(): ReceiverParameterDescriptor?
 
     private val functions = c.storageManager.createMemoizedFunction {
         (name: Name): Collection<FunctionDescriptor>
         ->
-        val result = LinkedHashSet<SimpleFunctionDescriptor>()
+        val result = LinkedHashSet<ComplexFunctionDescriptor>()
 
         for (method in memberIndex().findMethodsByName(name)) {
             val descriptor = resolveMethodToFunctionDescriptor(method, true)

@@ -330,7 +330,7 @@ public class ErrorUtils {
     }
 
     @NotNull
-    private static SimpleFunctionDescriptor createErrorFunction(@NotNull ErrorScope ownerScope) {
+    private static ComplexFunctionDescriptor createErrorFunction(@NotNull ErrorScope ownerScope) {
         ErrorSimpleFunctionDescriptorImpl function = new ErrorSimpleFunctionDescriptorImpl(ERROR_CLASS, ownerScope);
         function.initialize(
                 null,

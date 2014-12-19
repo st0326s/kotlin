@@ -576,7 +576,7 @@ public abstract class ElementResolver {
         }
 
         @Override
-        public Map<JetNamedFunction, SimpleFunctionDescriptor> getFunctions() {
+        public Map<JetNamedFunction, ComplexFunctionDescriptor> getFunctions() {
             return Collections.emptyMap();
         }
 

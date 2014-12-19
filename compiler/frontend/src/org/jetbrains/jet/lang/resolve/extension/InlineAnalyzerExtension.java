@@ -42,7 +42,7 @@ public class InlineAnalyzerExtension implements FunctionAnalyzerExtension.Analyz
     public void process(
             @NotNull final FunctionDescriptor descriptor, @NotNull JetNamedFunction function, @NotNull final BindingTrace trace
     ) {
-        assert descriptor instanceof SimpleFunctionDescriptor && ((SimpleFunctionDescriptor) descriptor).getInlineStrategy().isInline() :
+        assert descriptor instanceof ComplexFunctionDescriptor && ((ComplexFunctionDescriptor) descriptor).getInlineStrategy().isInline() :
                 "This method should be invoced on inline function: " + descriptor;
 
         checkDefaults(descriptor, function, trace);

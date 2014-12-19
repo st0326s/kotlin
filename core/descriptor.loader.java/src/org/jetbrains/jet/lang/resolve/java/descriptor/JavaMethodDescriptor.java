@@ -20,7 +20,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.jet.lang.descriptors.DeclarationDescriptor;
 import org.jetbrains.jet.lang.descriptors.FunctionDescriptor;
-import org.jetbrains.jet.lang.descriptors.SimpleFunctionDescriptor;
+import org.jetbrains.jet.lang.descriptors.ComplexFunctionDescriptor;
 import org.jetbrains.jet.lang.descriptors.SourceElement;
 import org.jetbrains.jet.lang.descriptors.annotations.Annotations;
 import org.jetbrains.jet.lang.descriptors.impl.FunctionDescriptorImpl;
@@ -33,7 +33,7 @@ public class JavaMethodDescriptor extends SimpleFunctionDescriptorImpl implement
 
     protected JavaMethodDescriptor(
             @NotNull DeclarationDescriptor containingDeclaration,
-            @Nullable SimpleFunctionDescriptor original,
+            @Nullable ComplexFunctionDescriptor original,
             @NotNull Annotations annotations,
             @NotNull Name name,
             @NotNull Kind kind,
@@ -81,7 +81,7 @@ public class JavaMethodDescriptor extends SimpleFunctionDescriptorImpl implement
     ) {
         JavaMethodDescriptor result = new JavaMethodDescriptor(
                 newOwner,
-                (SimpleFunctionDescriptor) original,
+                (ComplexFunctionDescriptor) original,
                 getAnnotations(),
                 getName(),
                 kind,

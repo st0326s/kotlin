@@ -61,7 +61,7 @@ public class InlineCodegen implements CallGenerator {
     private final GenerationState state;
     private final JetTypeMapper typeMapper;
 
-    private final SimpleFunctionDescriptor functionDescriptor;
+    private final ComplexFunctionDescriptor functionDescriptor;
     private final JvmMethodSignature jvmSignature;
     private final JetElement callElement;
     private final MethodContext context;
@@ -81,7 +81,7 @@ public class InlineCodegen implements CallGenerator {
     public InlineCodegen(
             @NotNull ExpressionCodegen codegen,
             @NotNull GenerationState state,
-            @NotNull SimpleFunctionDescriptor functionDescriptor,
+            @NotNull ComplexFunctionDescriptor functionDescriptor,
             @NotNull JetElement callElement,
             @Nullable ReifiedTypeParameterMappings typeParameterMappings
     ) {

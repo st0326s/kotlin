@@ -55,7 +55,7 @@ public class LazyJavaStaticClassScope(
 
     override fun getSubPackages(): Collection<FqName> = listOf()
 
-    override fun computeNonDeclaredFunctions(result: MutableCollection<SimpleFunctionDescriptor>, name: Name) {
+    override fun computeNonDeclaredFunctions(result: MutableCollection<ComplexFunctionDescriptor>, name: Name) {
         val nestedClassesScope = getContainingDeclaration().getUnsubstitutedInnerClassesScope()
         result.addIfNotNull(c.samConversionResolver.resolveSamConstructor(name, nestedClassesScope))
 

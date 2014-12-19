@@ -28,13 +28,13 @@ import org.jetbrains.jet.lang.types.lang.InlineUtil;
 
 import java.util.List;
 
-public class SimpleFunctionDescriptorImpl extends FunctionDescriptorImpl implements SimpleFunctionDescriptor {
+public class SimpleFunctionDescriptorImpl extends FunctionDescriptorImpl implements ComplexFunctionDescriptor {
 
     private InlineStrategy inlineStrategy;
 
     protected SimpleFunctionDescriptorImpl(
             @NotNull DeclarationDescriptor containingDeclaration,
-            @Nullable SimpleFunctionDescriptor original,
+            @Nullable ComplexFunctionDescriptor original,
             @NotNull Annotations annotations,
             @NotNull Name name,
             @NotNull Kind kind,
@@ -74,8 +74,8 @@ public class SimpleFunctionDescriptorImpl extends FunctionDescriptorImpl impleme
 
     @NotNull
     @Override
-    public SimpleFunctionDescriptor getOriginal() {
-        return (SimpleFunctionDescriptor) super.getOriginal();
+    public ComplexFunctionDescriptor getOriginal() {
+        return (ComplexFunctionDescriptor) super.getOriginal();
     }
 
     @NotNull
@@ -87,7 +87,7 @@ public class SimpleFunctionDescriptorImpl extends FunctionDescriptorImpl impleme
     ) {
         return new SimpleFunctionDescriptorImpl(
                 newOwner,
-                (SimpleFunctionDescriptor) original,
+                (ComplexFunctionDescriptor) original,
                 // TODO : safeSubstitute
                 getAnnotations(),
                 getName(),
@@ -98,7 +98,7 @@ public class SimpleFunctionDescriptorImpl extends FunctionDescriptorImpl impleme
 
     @NotNull
     @Override
-    public SimpleFunctionDescriptor copy(DeclarationDescriptor newOwner, Modality modality, Visibility visibility, Kind kind, boolean copyOverrides) {
+    public ComplexFunctionDescriptor copy(DeclarationDescriptor newOwner, Modality modality, Visibility visibility, Kind kind, boolean copyOverrides) {
         return (SimpleFunctionDescriptorImpl)doSubstitute(TypeSubstitutor.EMPTY, newOwner, modality, visibility, null, copyOverrides, kind);
     }
 

@@ -48,13 +48,13 @@ import static org.jetbrains.jet.lang.resolve.InlineDescriptorUtils.checkNonLocal
 
 public class InlineCallResolverExtension implements CallResolverExtension {
 
-    private final SimpleFunctionDescriptor descriptor;
+    private final ComplexFunctionDescriptor descriptor;
 
     private final Set<CallableDescriptor> inlinableParameters = new HashSet<CallableDescriptor>();
 
     private final boolean isEffectivelyPublicApiFunction;
 
-    public InlineCallResolverExtension(@NotNull SimpleFunctionDescriptor descriptor) {
+    public InlineCallResolverExtension(@NotNull ComplexFunctionDescriptor descriptor) {
         assert descriptor.getInlineStrategy().isInline() : "This extension should be created only for inline functions but not " + descriptor;
         this.descriptor = descriptor;
         this.isEffectivelyPublicApiFunction = isEffectivelyPublicApi(descriptor);
@@ -134,8 +134,8 @@ public class InlineCallResolverExtension implements CallResolverExtension {
         CallableDescriptor argumentCallee = getCalleeDescriptor(context, argumentExpression, false);
 
         if (argumentCallee != null && inlinableParameters.contains(argumentCallee)) {
-            boolean isTargetInlineFunction = targetDescriptor instanceof SimpleFunctionDescriptor &&
-                                             ((SimpleFunctionDescriptor) targetDescriptor).getInlineStrategy().isInline();
+            boolean isTargetInlineFunction = targetDescriptor instanceof ComplexFunctionDescriptor &&
+                                             ((ComplexFunctionDescriptor) targetDescriptor).getInlineStrategy().isInline();
 
             if (!isTargetInlineFunction || !isInlinableParameter(targetParameterDescriptor)) {
                 context.trace.report(Errors.USAGE_IS_NOT_INLINABLE.on(argumentExpression, argumentExpression, descriptor));
@@ -227,7 +227,7 @@ public class InlineCallResolverExtension implements CallResolverExtension {
     }
 
     private static boolean isInvokeOrInlineExtension(@NotNull CallableDescriptor descriptor) {
-        if (!(descriptor instanceof SimpleFunctionDescriptor)) {
+        if (!(descriptor instanceof ComplexFunctionDescriptor)) {
             return false;
         }
 
@@ -238,7 +238,7 @@ public class InlineCallResolverExtension implements CallResolverExtension {
 
         return isInvoke ||
                //or inline extension
-               ((SimpleFunctionDescriptor) descriptor).getInlineStrategy().isInline();
+               ((ComplexFunctionDescriptor) descriptor).getInlineStrategy().isInline();
     }
 
     private void checkVisibility(@NotNull CallableDescriptor declarationDescriptor, @NotNull JetElement expression, @NotNull BasicCallResolutionContext context){

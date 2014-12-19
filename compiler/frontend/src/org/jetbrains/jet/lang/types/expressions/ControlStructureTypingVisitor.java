@@ -472,7 +472,7 @@ public class ControlStructureTypingVisitor extends ExpressionTypingVisitor {
             }
         }
         else if (labelTargetElement != null) {
-            SimpleFunctionDescriptor functionDescriptor = context.trace.get(FUNCTION, labelTargetElement);
+            ComplexFunctionDescriptor functionDescriptor = context.trace.get(FUNCTION, labelTargetElement);
             if (functionDescriptor != null) {
                 expectedType = getFunctionExpectedReturnType(functionDescriptor, labelTargetElement);
                 if (!InlineDescriptorUtils.checkNonLocalReturnUsage(functionDescriptor, expression, context.trace)) {

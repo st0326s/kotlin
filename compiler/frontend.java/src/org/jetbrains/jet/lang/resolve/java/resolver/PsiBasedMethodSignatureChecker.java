@@ -25,7 +25,7 @@ import com.intellij.psi.util.TypeConversionUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.jet.lang.descriptors.ClassDescriptor;
 import org.jetbrains.jet.lang.descriptors.FunctionDescriptor;
-import org.jetbrains.jet.lang.descriptors.SimpleFunctionDescriptor;
+import org.jetbrains.jet.lang.descriptors.ComplexFunctionDescriptor;
 import org.jetbrains.jet.lang.resolve.OverrideResolver;
 import org.jetbrains.jet.lang.resolve.OverridingUtil;
 import org.jetbrains.jet.lang.resolve.java.kotlinSignature.SignaturesUtil;
@@ -164,7 +164,7 @@ public class PsiBasedMethodSignatureChecker implements MethodSignatureChecker {
     public void checkSignature(
             @NotNull JavaMethod method,
             boolean reportSignatureErrors,
-            @NotNull SimpleFunctionDescriptor descriptor,
+            @NotNull ComplexFunctionDescriptor descriptor,
             @NotNull List<String> signatureErrors,
             @NotNull List<FunctionDescriptor> superFunctions
     ) {

@@ -19,7 +19,7 @@ package org.jetbrains.jet.lang.descriptors.impl;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.jet.lang.descriptors.DeclarationDescriptor;
 import org.jetbrains.jet.lang.descriptors.PropertyDescriptor;
-import org.jetbrains.jet.lang.descriptors.SimpleFunctionDescriptor;
+import org.jetbrains.jet.lang.descriptors.ComplexFunctionDescriptor;
 
 public interface PackageLikeBuilder {
     @NotNull
@@ -27,7 +27,7 @@ public interface PackageLikeBuilder {
 
     void addClassifierDescriptor(@NotNull MutableClassDescriptor classDescriptor);
 
-    void addFunctionDescriptor(@NotNull SimpleFunctionDescriptor functionDescriptor);
+    void addFunctionDescriptor(@NotNull ComplexFunctionDescriptor functionDescriptor);
 
     void addPropertyDescriptor(@NotNull PropertyDescriptor propertyDescriptor);
 

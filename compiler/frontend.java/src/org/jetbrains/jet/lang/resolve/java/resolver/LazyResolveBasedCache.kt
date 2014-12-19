@@ -55,7 +55,7 @@ public class LazyResolveBasedCache() : JavaResolverCache {
         }
     }
 
-    override fun recordMethod(method: JavaMethod, descriptor: SimpleFunctionDescriptor) {
+    override fun recordMethod(method: JavaMethod, descriptor: ComplexFunctionDescriptor) {
         traceBasedCache.recordMethod(method, descriptor)
     }
 

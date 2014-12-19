@@ -25,7 +25,6 @@ import org.jetbrains.jet.lang.diagnostics.Errors;
 import org.jetbrains.jet.lang.psi.JetClassOrObject;
 import org.jetbrains.jet.lang.psi.JetDeclaration;
 import org.jetbrains.jet.lang.psi.JetObjectDeclaration;
-import org.jetbrains.jet.lang.psi.JetParameter;
 import org.jetbrains.jet.lang.resolve.name.FqNameUnsafe;
 import org.jetbrains.jet.lang.resolve.name.Name;
 
@@ -93,7 +92,7 @@ public class OverloadResolver {
 
         MultiMap<FqNameUnsafe, CallableMemberDescriptor> functionsByName = MultiMap.create();
 
-        for (SimpleFunctionDescriptor function : c.getFunctions().values()) {
+        for (ComplexFunctionDescriptor function : c.getFunctions().values()) {
             if (function.getContainingDeclaration() instanceof PackageFragmentDescriptor) {
                 functionsByName.putValue(getFqName(function), function);
             }

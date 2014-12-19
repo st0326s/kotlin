@@ -124,7 +124,7 @@ public class CodegenBinding {
 
         ClassDescriptor descriptor = bindingContext.get(CLASS, expression);
         if (descriptor == null) {
-            SimpleFunctionDescriptor functionDescriptor = bindingContext.get(FUNCTION, expression);
+            ComplexFunctionDescriptor functionDescriptor = bindingContext.get(FUNCTION, expression);
             assert functionDescriptor != null;
             return asmTypeForAnonymousClass(bindingContext, functionDescriptor);
         }

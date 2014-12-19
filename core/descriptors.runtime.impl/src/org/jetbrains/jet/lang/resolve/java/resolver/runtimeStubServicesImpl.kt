@@ -74,7 +74,7 @@ public object RuntimeExternalSignatureResolver : ExternalSignatureResolver {
 // TODO: ?
 public object RuntimeJavaResolverCache : JavaResolverCache {
     override fun getClassResolvedFromSource(fqName: FqName) = null
-    override fun recordMethod(method: JavaMethod, descriptor: SimpleFunctionDescriptor) { }
+    override fun recordMethod(method: JavaMethod, descriptor: ComplexFunctionDescriptor) { }
     override fun recordConstructor(element: JavaElement, descriptor: ConstructorDescriptor) { }
     override fun recordField(field: JavaField, descriptor: PropertyDescriptor) { }
     override fun recordClass(javaClass: JavaClass, descriptor: ClassDescriptor) { }
@@ -101,7 +101,7 @@ public object RuntimeMethodSignatureChecker : MethodSignatureChecker {
     override fun checkSignature(
             method: JavaMethod,
             reportSignatureErrors: Boolean,
-            descriptor: SimpleFunctionDescriptor,
+            descriptor: ComplexFunctionDescriptor,
             signatureErrors: List<String>,
             superFunctions: List<FunctionDescriptor>
     ) {

@@ -26,7 +26,7 @@ import org.jetbrains.jet.lang.resolve.java.structure.JavaMethod
 import org.jetbrains.jet.lang.types.JetType
 import org.jetbrains.jet.lang.resolve.java.sources.JavaSourceElement
 import org.jetbrains.jet.lang.resolve.java.structure.JavaClass
-import org.jetbrains.jet.lang.descriptors.SimpleFunctionDescriptor
+import org.jetbrains.jet.lang.descriptors.ComplexFunctionDescriptor
 import org.jetbrains.jet.lang.types.TypeUtils
 import java.util.ArrayList
 import org.jetbrains.jet.lang.types.checker.JetTypeChecker
@@ -63,12 +63,12 @@ public object SamConversionResolverImpl : SamConversionResolver {
         return SingleAbstractMethodUtils.getFunctionTypeForAbstractMethod(abstractMethod)
     }
 
-    private fun findFunctionWithMostSpecificReturnType(supertypes: Set<JetType>): SimpleFunctionDescriptor {
-        val candidates = ArrayList<SimpleFunctionDescriptor>(supertypes.size())
+    private fun findFunctionWithMostSpecificReturnType(supertypes: Set<JetType>): ComplexFunctionDescriptor {
+        val candidates = ArrayList<ComplexFunctionDescriptor>(supertypes.size())
         for (supertype in supertypes) {
             val abstractMembers = SingleAbstractMethodUtils.getAbstractMembers(supertype)
             if (!abstractMembers.isEmpty()) {
-                candidates.add((abstractMembers[0] as SimpleFunctionDescriptor))
+                candidates.add((abstractMembers[0] as ComplexFunctionDescriptor))
             }
         }
         if (candidates.isEmpty()) {

@@ -185,7 +185,7 @@ public class DeclarationResolver {
             declaration.accept(new JetVisitorVoid() {
                 @Override
                 public void visitNamedFunction(@NotNull JetNamedFunction function) {
-                    SimpleFunctionDescriptor functionDescriptor = descriptorResolver.resolveFunctionDescriptor(
+                    ComplexFunctionDescriptor functionDescriptor = descriptorResolver.resolveFunctionDescriptor(
                             packageLike.getOwnerForChildren(),
                             scopeForFunctions,
                             function,
@@ -254,7 +254,7 @@ public class DeclarationResolver {
                 if (property != null) {
                     ++parameterIndex;
 
-                    SimpleFunctionDescriptor functionDescriptor =
+                    ComplexFunctionDescriptor functionDescriptor =
                             DescriptorResolver.createComponentFunctionDescriptor(parameterIndex, property, parameter, classDescriptor, trace);
 
                     classDescriptor.getBuilder().addFunctionDescriptor(functionDescriptor);
@@ -264,7 +264,7 @@ public class DeclarationResolver {
     }
 
     private void createCopyFunction(@NotNull MutableClassDescriptor classDescriptor, List<ValueParameterDescriptor> parameters) {
-        SimpleFunctionDescriptor functionDescriptor = DescriptorResolver.createCopyFunctionDescriptor(
+        ComplexFunctionDescriptor functionDescriptor = DescriptorResolver.createCopyFunctionDescriptor(
                 parameters, classDescriptor, trace);
 
         classDescriptor.getBuilder().addFunctionDescriptor(functionDescriptor);

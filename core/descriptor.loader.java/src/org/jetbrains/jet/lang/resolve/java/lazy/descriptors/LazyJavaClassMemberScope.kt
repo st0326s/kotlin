@@ -62,14 +62,14 @@ public class LazyJavaClassMemberScope(
         result ifEmpty { emptyOrSingletonList(createDefaultConstructor()) }
     }
 
-    override fun computeNonDeclaredFunctions(result: MutableCollection<SimpleFunctionDescriptor>, name: Name) {
+    override fun computeNonDeclaredFunctions(result: MutableCollection<ComplexFunctionDescriptor>, name: Name) {
         val functionsFromSupertypes = getFunctionsFromSupertypes(name, getContainingDeclaration())
         result.addAll(DescriptorResolverUtils.resolveOverrides(name, functionsFromSupertypes, result, getContainingDeclaration(), c.errorReporter))
     }
 
-    private fun getFunctionsFromSupertypes(name: Name, descriptor: ClassDescriptor): Set<SimpleFunctionDescriptor> {
+    private fun getFunctionsFromSupertypes(name: Name, descriptor: ClassDescriptor): Set<ComplexFunctionDescriptor> {
           return descriptor.getTypeConstructor().getSupertypes().flatMap {
-              it.getMemberScope().getFunctions(name).map { f -> f as SimpleFunctionDescriptor }
+              it.getMemberScope().getFunctions(name).map { f -> f as ComplexFunctionDescriptor }
           }.toSet()
       }
 

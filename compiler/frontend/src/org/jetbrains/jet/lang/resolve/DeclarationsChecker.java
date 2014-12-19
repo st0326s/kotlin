@@ -88,10 +88,10 @@ public class DeclarationsChecker {
             modifiersChecker.checkModifiersForDeclaration(classOrObject, classDescriptor);
         }
 
-        Map<JetNamedFunction, SimpleFunctionDescriptor> functions = bodiesResolveContext.getFunctions();
-        for (Map.Entry<JetNamedFunction, SimpleFunctionDescriptor> entry : functions.entrySet()) {
+        Map<JetNamedFunction, ComplexFunctionDescriptor> functions = bodiesResolveContext.getFunctions();
+        for (Map.Entry<JetNamedFunction, ComplexFunctionDescriptor> entry : functions.entrySet()) {
             JetNamedFunction function = entry.getKey();
-            SimpleFunctionDescriptor functionDescriptor = entry.getValue();
+            ComplexFunctionDescriptor functionDescriptor = entry.getValue();
 
             if (!bodiesResolveContext.completeAnalysisNeeded(function)) continue;
             checkFunction(function, functionDescriptor);
@@ -480,7 +480,7 @@ public class DeclarationsChecker {
         }
     }
 
-    protected void checkFunction(JetNamedFunction function, SimpleFunctionDescriptor functionDescriptor) {
+    protected void checkFunction(JetNamedFunction function, ComplexFunctionDescriptor functionDescriptor) {
         reportErrorIfHasIllegalModifier(function);
         DeclarationDescriptor containingDescriptor = functionDescriptor.getContainingDeclaration();
         boolean hasAbstractModifier = function.hasModifier(JetTokens.ABSTRACT_KEYWORD);

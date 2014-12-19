@@ -18,7 +18,7 @@ package org.jetbrains.jet.lang.resolve;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.jet.lang.descriptors.FunctionDescriptor;
-import org.jetbrains.jet.lang.descriptors.SimpleFunctionDescriptor;
+import org.jetbrains.jet.lang.descriptors.ComplexFunctionDescriptor;
 import org.jetbrains.jet.lang.psi.JetNamedFunction;
 import org.jetbrains.jet.lang.resolve.extension.InlineAnalyzerExtension;
 
@@ -42,9 +42,9 @@ public class FunctionAnalyzerExtension {
     }
 
     public void process(@NotNull BodiesResolveContext bodiesResolveContext) {
-        for (Map.Entry<JetNamedFunction, SimpleFunctionDescriptor> entry : bodiesResolveContext.getFunctions().entrySet()) {
+        for (Map.Entry<JetNamedFunction, ComplexFunctionDescriptor> entry : bodiesResolveContext.getFunctions().entrySet()) {
             JetNamedFunction function = entry.getKey();
-            SimpleFunctionDescriptor functionDescriptor = entry.getValue();
+            ComplexFunctionDescriptor functionDescriptor = entry.getValue();
 
             if (!bodiesResolveContext.completeAnalysisNeeded(function.getContainingFile())) continue;
 
@@ -58,8 +58,8 @@ public class FunctionAnalyzerExtension {
     @NotNull
     private static List<AnalyzerExtension> getExtensions(@NotNull FunctionDescriptor functionDescriptor) {
         List<AnalyzerExtension> list = new ArrayList<AnalyzerExtension>();
-        if (functionDescriptor instanceof SimpleFunctionDescriptor &&
-                ((SimpleFunctionDescriptor) functionDescriptor).getInlineStrategy().isInline()) {
+        if (functionDescriptor instanceof ComplexFunctionDescriptor &&
+                ((ComplexFunctionDescriptor) functionDescriptor).getInlineStrategy().isInline()) {
             list.add(InlineAnalyzerExtension.INSTANCE);
         }
         return list;

@@ -161,7 +161,7 @@ public class CodegenUtil {
     ) {
         CallableMemberDescriptor copy = inheritedMember.copy(newOwner, modality, visibility, kind, copyOverrides);
         Map<FunctionDescriptor, FunctionDescriptor> result = new LinkedHashMap<FunctionDescriptor, FunctionDescriptor>(0);
-        if (traitMember instanceof SimpleFunctionDescriptor) {
+        if (traitMember instanceof ComplexFunctionDescriptor) {
             result.put((FunctionDescriptor) traitMember, (FunctionDescriptor) copy);
         }
         else if (traitMember instanceof PropertyDescriptor) {

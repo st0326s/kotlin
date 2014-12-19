@@ -67,8 +67,8 @@ public final class DelegationResolver<T extends CallableMemberDescriptor> {
                 PropertyDescriptor propertyDescriptor = (PropertyDescriptor) descriptor;
                 classDescriptor.getBuilder().addPropertyDescriptor(propertyDescriptor);
             }
-            else if (descriptor instanceof SimpleFunctionDescriptor) {
-                SimpleFunctionDescriptor functionDescriptor = (SimpleFunctionDescriptor) descriptor;
+            else if (descriptor instanceof ComplexFunctionDescriptor) {
+                ComplexFunctionDescriptor functionDescriptor = (ComplexFunctionDescriptor) descriptor;
                 classDescriptor.getBuilder().addFunctionDescriptor(functionDescriptor);
             }
         }

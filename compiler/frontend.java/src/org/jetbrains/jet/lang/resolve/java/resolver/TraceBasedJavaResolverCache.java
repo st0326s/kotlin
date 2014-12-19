@@ -22,7 +22,7 @@ import org.jetbrains.annotations.Nullable;
 import org.jetbrains.jet.lang.descriptors.ClassDescriptor;
 import org.jetbrains.jet.lang.descriptors.ConstructorDescriptor;
 import org.jetbrains.jet.lang.descriptors.PropertyDescriptor;
-import org.jetbrains.jet.lang.descriptors.SimpleFunctionDescriptor;
+import org.jetbrains.jet.lang.descriptors.ComplexFunctionDescriptor;
 import org.jetbrains.jet.lang.resolve.BindingContextUtils;
 import org.jetbrains.jet.lang.resolve.BindingTrace;
 import org.jetbrains.jet.lang.resolve.java.structure.JavaClass;
@@ -54,7 +54,7 @@ public class TraceBasedJavaResolverCache implements JavaResolverCache {
     }
 
     @Override
-    public void recordMethod(@NotNull JavaMethod method, @NotNull SimpleFunctionDescriptor descriptor) {
+    public void recordMethod(@NotNull JavaMethod method, @NotNull ComplexFunctionDescriptor descriptor) {
         BindingContextUtils.recordFunctionDeclarationToDescriptor(trace, ((JavaMethodImpl) method).getPsi(), descriptor);
     }
 

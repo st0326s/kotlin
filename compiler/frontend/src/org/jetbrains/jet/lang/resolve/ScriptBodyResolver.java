@@ -19,7 +19,7 @@ package org.jetbrains.jet.lang.resolve;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.jet.lang.descriptors.CallableMemberDescriptor;
 import org.jetbrains.jet.lang.descriptors.ScriptDescriptor;
-import org.jetbrains.jet.lang.descriptors.SimpleFunctionDescriptor;
+import org.jetbrains.jet.lang.descriptors.ComplexFunctionDescriptor;
 import org.jetbrains.jet.lang.descriptors.impl.PropertyDescriptorImpl;
 import org.jetbrains.jet.lang.descriptors.impl.ScriptDescriptorImpl;
 import org.jetbrains.jet.lang.psi.JetDeclaration;
@@ -75,7 +75,7 @@ public class ScriptBodyResolver {
             JetType returnType = resolveScriptReturnType(declaration, descriptor, trace);
 
             List<PropertyDescriptorImpl> properties = new ArrayList<PropertyDescriptorImpl>();
-            List<SimpleFunctionDescriptor> functions = new ArrayList<SimpleFunctionDescriptor>();
+            List<ComplexFunctionDescriptor> functions = new ArrayList<ComplexFunctionDescriptor>();
 
             BindingContext bindingContext = trace.getBindingContext();
             for (JetDeclaration jetDeclaration : declaration.getDeclarations()) {
@@ -88,7 +88,7 @@ public class ScriptBodyResolver {
                 else if (jetDeclaration instanceof JetNamedFunction) {
                     if (!DataPackage.shouldBeScriptClassMember(jetDeclaration)) continue;
 
-                    SimpleFunctionDescriptor function = bindingContext.get(BindingContext.FUNCTION, jetDeclaration);
+                    ComplexFunctionDescriptor function = bindingContext.get(BindingContext.FUNCTION, jetDeclaration);
                     assert function != null;
                     functions.add(function.copy(descriptor.getClassDescriptor(), function.getModality(), function.getVisibility(),
                                                 CallableMemberDescriptor.Kind.DECLARATION, false));

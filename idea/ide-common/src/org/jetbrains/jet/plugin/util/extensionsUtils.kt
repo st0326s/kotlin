@@ -21,7 +21,7 @@ import org.jetbrains.jet.lang.resolve.scopes.receivers.ReceiverValue
 import org.jetbrains.jet.lang.resolve.BindingContext
 import org.jetbrains.jet.lang.resolve.calls.smartcasts.DataFlowInfo
 import org.jetbrains.jet.lang.resolve.scopes.JetScope
-import org.jetbrains.jet.lang.descriptors.SimpleFunctionDescriptor
+import org.jetbrains.jet.lang.descriptors.ComplexFunctionDescriptor
 import org.jetbrains.jet.lang.resolve.calls.smartcasts.SmartCastUtils
 import org.jetbrains.jet.lang.descriptors.DeclarationDescriptor
 
@@ -31,12 +31,12 @@ public enum class CallType {
 
     INFIX {
         override fun canCall(descriptor: DeclarationDescriptor)
-                = descriptor is SimpleFunctionDescriptor && descriptor.getValueParameters().size == 1
+                = descriptor is ComplexFunctionDescriptor && descriptor.getValueParameters().size == 1
     }
 
     UNARY {
         override fun canCall(descriptor: DeclarationDescriptor)
-                = descriptor is SimpleFunctionDescriptor && descriptor.getValueParameters().size == 0
+                = descriptor is ComplexFunctionDescriptor && descriptor.getValueParameters().size == 0
     }
 
     public open fun canCall(descriptor: DeclarationDescriptor): Boolean = true

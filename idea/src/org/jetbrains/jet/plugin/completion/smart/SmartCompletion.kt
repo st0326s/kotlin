@@ -313,7 +313,7 @@ class SmartCompletion(val expression: JetSimpleNameExpression,
                     .addTailAndNameSimilarity(matchedExpectedInfos)
         }
 
-        if (descriptor is SimpleFunctionDescriptor) {
+        if (descriptor is ComplexFunctionDescriptor) {
             return toLookupElement(descriptor)
         }
         else if (descriptor is ClassDescriptor && descriptor.getModality() != Modality.ABSTRACT) {

@@ -21,7 +21,7 @@ import org.jetbrains.annotations.Nullable;
 import org.jetbrains.jet.lang.cfg.JetFlowInformationProvider;
 import org.jetbrains.jet.lang.descriptors.PropertyAccessorDescriptor;
 import org.jetbrains.jet.lang.descriptors.PropertyDescriptor;
-import org.jetbrains.jet.lang.descriptors.SimpleFunctionDescriptor;
+import org.jetbrains.jet.lang.descriptors.ComplexFunctionDescriptor;
 import org.jetbrains.jet.lang.psi.*;
 import org.jetbrains.jet.lang.types.JetType;
 
@@ -47,9 +47,9 @@ public class ControlFlowAnalyzer {
             if (!c.completeAnalysisNeeded(aClass)) continue;
             checkDeclarationContainer(c, aClass);
         }
-        for (Map.Entry<JetNamedFunction, SimpleFunctionDescriptor> entry : c.getFunctions().entrySet()) {
+        for (Map.Entry<JetNamedFunction, ComplexFunctionDescriptor> entry : c.getFunctions().entrySet()) {
             JetNamedFunction function = entry.getKey();
-            SimpleFunctionDescriptor functionDescriptor = entry.getValue();
+            ComplexFunctionDescriptor functionDescriptor = entry.getValue();
             if (!c.completeAnalysisNeeded(function)) continue;
             JetType expectedReturnType = !function.hasBlockBody() && !function.hasDeclaredReturnType()
                                                ? NO_EXPECTED_TYPE

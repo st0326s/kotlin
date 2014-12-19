@@ -22,15 +22,15 @@ import org.jetbrains.jet.lang.types.lang.InlineStrategy;
 /**
  * Simple functions are the ones with 'fun' keyword and function literals
  */
-public interface SimpleFunctionDescriptor extends FunctionDescriptor {
+public interface ComplexFunctionDescriptor extends FunctionDescriptor {
 
     @NotNull
     @Override
-    SimpleFunctionDescriptor copy(DeclarationDescriptor newOwner, Modality modality, Visibility visibility, Kind kind, boolean copyOverrides);
+    ComplexFunctionDescriptor copy(DeclarationDescriptor newOwner, Modality modality, Visibility visibility, Kind kind, boolean copyOverrides);
 
     @NotNull
     @Override
-    SimpleFunctionDescriptor getOriginal();
+    ComplexFunctionDescriptor getOriginal();
 
     @NotNull
     InlineStrategy getInlineStrategy();

@@ -104,7 +104,7 @@ public class LazyPackageFragmentScopeForJavaPackage(
             onRecursiveCall = listOf()
     )
 
-    override fun computeNonDeclaredFunctions(result: MutableCollection<SimpleFunctionDescriptor>, name: Name) {
+    override fun computeNonDeclaredFunctions(result: MutableCollection<ComplexFunctionDescriptor>, name: Name) {
         result.addIfNotNull(c.samConversionResolver.resolveSamConstructor(name, this))
     }
 

@@ -94,7 +94,7 @@ public class FunctionCodegen extends ParentCodegenAware {
     }
 
     public void gen(@NotNull JetNamedFunction function) {
-        SimpleFunctionDescriptor functionDescriptor = bindingContext.get(BindingContext.FUNCTION, function);
+        ComplexFunctionDescriptor functionDescriptor = bindingContext.get(BindingContext.FUNCTION, function);
         assert functionDescriptor != null : "No descriptor for function " + function.getText() + "\n" +
                                             "in " + function.getContainingFile().getVirtualFile();
 

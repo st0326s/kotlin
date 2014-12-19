@@ -261,8 +261,8 @@ public class AsmUtil {
     private static boolean isDeclarationInsideInlineFunction(@NotNull ClassDescriptor descriptor) {
         //NB: constructor context couldn't be inline
         DeclarationDescriptor parentDeclaration = descriptor.getContainingDeclaration();
-        if (parentDeclaration instanceof SimpleFunctionDescriptor &&
-            ((SimpleFunctionDescriptor) parentDeclaration).getInlineStrategy().isInline()) {
+        if (parentDeclaration instanceof ComplexFunctionDescriptor &&
+            ((ComplexFunctionDescriptor) parentDeclaration).getInlineStrategy().isInline()) {
             return true;
         }
         return false;

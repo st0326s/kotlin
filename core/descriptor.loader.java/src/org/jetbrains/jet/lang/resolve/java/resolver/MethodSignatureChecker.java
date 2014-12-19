@@ -18,7 +18,7 @@ package org.jetbrains.jet.lang.resolve.java.resolver;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.jet.lang.descriptors.FunctionDescriptor;
-import org.jetbrains.jet.lang.descriptors.SimpleFunctionDescriptor;
+import org.jetbrains.jet.lang.descriptors.ComplexFunctionDescriptor;
 import org.jetbrains.jet.lang.resolve.java.structure.JavaMethod;
 
 import java.util.List;
@@ -27,7 +27,7 @@ public interface MethodSignatureChecker {
     void checkSignature(
             @NotNull JavaMethod method,
             boolean reportSignatureErrors,
-            @NotNull SimpleFunctionDescriptor descriptor,
+            @NotNull ComplexFunctionDescriptor descriptor,
             @NotNull List<String> signatureErrors,
             @NotNull List<FunctionDescriptor> superFunctions
     );

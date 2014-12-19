@@ -21,7 +21,7 @@ import org.jetbrains.annotations.Nullable;
 import org.jetbrains.jet.lang.descriptors.ClassDescriptor;
 import org.jetbrains.jet.lang.descriptors.ConstructorDescriptor;
 import org.jetbrains.jet.lang.descriptors.PropertyDescriptor;
-import org.jetbrains.jet.lang.descriptors.SimpleFunctionDescriptor;
+import org.jetbrains.jet.lang.descriptors.ComplexFunctionDescriptor;
 import org.jetbrains.jet.lang.resolve.java.structure.JavaClass;
 import org.jetbrains.jet.lang.resolve.java.structure.JavaElement;
 import org.jetbrains.jet.lang.resolve.java.structure.JavaField;
@@ -32,7 +32,7 @@ public interface JavaResolverCache {
     @Nullable
     ClassDescriptor getClassResolvedFromSource(@NotNull FqName fqName);
 
-    void recordMethod(@NotNull JavaMethod method, @NotNull SimpleFunctionDescriptor descriptor);
+    void recordMethod(@NotNull JavaMethod method, @NotNull ComplexFunctionDescriptor descriptor);
 
     void recordConstructor(@NotNull JavaElement element, @NotNull ConstructorDescriptor descriptor);
 

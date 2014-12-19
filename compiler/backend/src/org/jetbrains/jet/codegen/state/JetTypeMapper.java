@@ -935,7 +935,7 @@ public class JetTypeMapper {
     }
 
     public Type getSharedVarType(DeclarationDescriptor descriptor) {
-        if (descriptor instanceof SimpleFunctionDescriptor && descriptor.getContainingDeclaration() instanceof FunctionDescriptor) {
+        if (descriptor instanceof ComplexFunctionDescriptor && descriptor.getContainingDeclaration() instanceof FunctionDescriptor) {
             return asmTypeForAnonymousClass(bindingContext, (FunctionDescriptor) descriptor);
         }
         else if (descriptor instanceof PropertyDescriptor || descriptor instanceof FunctionDescriptor) {

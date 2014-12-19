@@ -63,7 +63,7 @@ import org.jetbrains.jet.lang.psi.JetReturnExpression
 import org.jetbrains.jet.lang.resolve.bindingContextUtil.getTargetFunctionDescriptor
 import org.jetbrains.jet.plugin.completion.smart.toList
 import org.jetbrains.jet.lang.descriptors.PropertyGetterDescriptor
-import org.jetbrains.jet.lang.descriptors.SimpleFunctionDescriptor
+import org.jetbrains.jet.lang.descriptors.ComplexFunctionDescriptor
 import org.jetbrains.jet.lang.descriptors.VariableDescriptor
 import org.jetbrains.jet.lang.resolve.calls.results.ResolutionStatus
 import org.jetbrains.jet.plugin.caches.resolve.ResolutionFacade
@@ -318,7 +318,7 @@ class ExpectedInfos(val bindingContext: BindingContext, val resolutionFacade: Re
 
     private fun functionReturnValueExpectedInfo(descriptor: FunctionDescriptor): ExpectedInfo? {
         return when (descriptor) {
-            is SimpleFunctionDescriptor -> ExpectedInfo(descriptor.getReturnType() ?: return null, descriptor.getName().asString(), null)
+            is ComplexFunctionDescriptor -> ExpectedInfo(descriptor.getReturnType() ?: return null, descriptor.getName().asString(), null)
 
             is PropertyGetterDescriptor -> {
                 if (descriptor !is PropertyGetterDescriptor) return null

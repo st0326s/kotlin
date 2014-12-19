@@ -19,7 +19,7 @@ package org.jetbrains.jet.lang.resolve;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.jet.lang.descriptors.CallableDescriptor;
 import org.jetbrains.jet.lang.descriptors.ConstructorDescriptor;
-import org.jetbrains.jet.lang.descriptors.SimpleFunctionDescriptor;
+import org.jetbrains.jet.lang.descriptors.ComplexFunctionDescriptor;
 import org.jetbrains.jet.lang.descriptors.PropertyDescriptor;
 import org.jetbrains.jet.lang.types.JetType;
 import org.jetbrains.jet.lang.types.TypesPackage;
@@ -85,7 +85,7 @@ public class OverloadUtil {
         if (a instanceof PropertyDescriptor) {
             return 0;
         }
-        else if (a instanceof SimpleFunctionDescriptor) {
+        else if (a instanceof ComplexFunctionDescriptor) {
             return 1;
         }
         else if (a instanceof ConstructorDescriptor) {

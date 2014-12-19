@@ -282,7 +282,7 @@ public class DescriptorResolver {
     }
 
     @NotNull
-    public SimpleFunctionDescriptor resolveFunctionDescriptorWithAnnotationArguments(
+    public ComplexFunctionDescriptor resolveFunctionDescriptorWithAnnotationArguments(
             @NotNull DeclarationDescriptor containingDescriptor,
             @NotNull JetScope scope,
             @NotNull JetNamedFunction function,
@@ -294,7 +294,7 @@ public class DescriptorResolver {
     }
 
     @NotNull
-    public SimpleFunctionDescriptor resolveFunctionDescriptor(
+    public ComplexFunctionDescriptor resolveFunctionDescriptor(
             @NotNull DeclarationDescriptor containingDescriptor,
             @NotNull JetScope scope,
             @NotNull JetNamedFunction function,
@@ -306,7 +306,7 @@ public class DescriptorResolver {
     }
 
     @NotNull
-    private SimpleFunctionDescriptor resolveFunctionDescriptor(
+    private ComplexFunctionDescriptor resolveFunctionDescriptor(
             @NotNull DeclarationDescriptor containingDescriptor,
             @NotNull final JetScope scope,
             @NotNull final JetNamedFunction function,
@@ -389,7 +389,7 @@ public class DescriptorResolver {
     }
 
     @NotNull
-    public static SimpleFunctionDescriptor createComponentFunctionDescriptor(
+    public static ComplexFunctionDescriptor createComponentFunctionDescriptor(
             int parameterIndex,
             @NotNull PropertyDescriptor property,
             @NotNull ValueParameterDescriptor parameter,
@@ -423,7 +423,7 @@ public class DescriptorResolver {
     }
 
     @NotNull
-    public static SimpleFunctionDescriptor createCopyFunctionDescriptor(
+    public static ComplexFunctionDescriptor createCopyFunctionDescriptor(
             @NotNull Collection<ValueParameterDescriptor> constructorParameters,
             @NotNull ClassDescriptor classDescriptor,
             @NotNull BindingTrace trace

@@ -43,7 +43,7 @@ public class MainFunctionDetector {
             @NotNull
             @Override
             public FunctionDescriptor fun(JetNamedFunction function) {
-                SimpleFunctionDescriptor functionDescriptor = bindingContext.get(BindingContext.FUNCTION, function);
+                ComplexFunctionDescriptor functionDescriptor = bindingContext.get(BindingContext.FUNCTION, function);
                 if (functionDescriptor == null) {
                     throw new IllegalStateException("No descriptor resolved for " + function + " " + function.getText());
                 }

@@ -25,7 +25,7 @@ import org.jetbrains.jet.context.GlobalContext;
 import org.jetbrains.jet.lang.descriptors.ClassDescriptorWithResolutionScopes;
 import org.jetbrains.jet.lang.descriptors.PropertyDescriptor;
 import org.jetbrains.jet.lang.descriptors.ScriptDescriptor;
-import org.jetbrains.jet.lang.descriptors.SimpleFunctionDescriptor;
+import org.jetbrains.jet.lang.descriptors.ComplexFunctionDescriptor;
 import org.jetbrains.jet.lang.psi.*;
 import org.jetbrains.jet.lang.resolve.calls.smartcasts.DataFlowInfo;
 import org.jetbrains.jet.lang.resolve.scopes.JetScope;
@@ -56,7 +56,7 @@ public interface BodiesResolveContext extends GlobalContext {
     @Mutable
     Map<JetProperty, PropertyDescriptor> getProperties();
     @Mutable
-    Map<JetNamedFunction, SimpleFunctionDescriptor> getFunctions();
+    Map<JetNamedFunction, ComplexFunctionDescriptor> getFunctions();
 
     Function<JetDeclaration, JetScope> getDeclaringScopes();
     DataFlowInfo getOuterDataFlowInfo();

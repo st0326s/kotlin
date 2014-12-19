@@ -34,8 +34,8 @@ public class SamAdapterOverridabilityCondition implements ExternalOverridability
             return true;
         }
 
-        SimpleFunctionDescriptor superOriginal = getOriginalOfSamAdapterFunction((SimpleFunctionDescriptor) superDescriptor);
-        SimpleFunctionDescriptor subOriginal = getOriginalOfSamAdapterFunction((SimpleFunctionDescriptor) subDescriptor);
+        ComplexFunctionDescriptor superOriginal = getOriginalOfSamAdapterFunction((ComplexFunctionDescriptor) superDescriptor);
+        ComplexFunctionDescriptor subOriginal = getOriginalOfSamAdapterFunction((ComplexFunctionDescriptor) subDescriptor);
         if (superOriginal == null || subOriginal == null) { // super or sub is/overrides DECLARATION
             return subOriginal == null; // DECLARATION can override anything
         }
@@ -67,7 +67,7 @@ public class SamAdapterOverridabilityCondition implements ExternalOverridability
 
     // if function is or overrides declaration, returns null; otherwise, return original of sam adapter with substituted type parameters
     @Nullable
-    private static SimpleFunctionDescriptor getOriginalOfSamAdapterFunction(@NotNull SimpleFunctionDescriptor callable) {
+    private static ComplexFunctionDescriptor getOriginalOfSamAdapterFunction(@NotNull ComplexFunctionDescriptor callable) {
         DeclarationDescriptor containingDeclaration = callable.getContainingDeclaration();
         if (!(containingDeclaration instanceof ClassDescriptor)) {
             return null;
@@ -84,14 +84,14 @@ public class SamAdapterOverridabilityCondition implements ExternalOverridability
             return null;
         }
 
-        SimpleFunctionDescriptor originalDeclarationOfSam = ((SamAdapterFunctionDescriptor) fun).getOriginForSam();
+        ComplexFunctionDescriptor originalDeclarationOfSam = ((SamAdapterFunctionDescriptor) fun).getOriginForSam();
 
-        return ((SimpleFunctionDescriptor) originalDeclarationOfSam.substitute(TypeSubstitutor.create(declarationOrSynthesized.ownerType)));
+        return ((ComplexFunctionDescriptor) originalDeclarationOfSam.substitute(TypeSubstitutor.create(declarationOrSynthesized.ownerType)));
     }
 
     @Nullable
     private static SamAdapterInfo getNearestDeclarationOrSynthesized(
-            @NotNull SimpleFunctionDescriptor samAdapter,
+            @NotNull ComplexFunctionDescriptor samAdapter,
             @NotNull JetType ownerType
     ) {
         if (samAdapter.getKind() != CallableMemberDescriptor.Kind.FAKE_OVERRIDE) {
@@ -106,7 +106,7 @@ public class SamAdapterOverridabilityCondition implements ExternalOverridability
                     continue;
                 }
 
-                SamAdapterInfo found = getNearestDeclarationOrSynthesized((SimpleFunctionDescriptor) overridden, immediateSupertype);
+                SamAdapterInfo found = getNearestDeclarationOrSynthesized((ComplexFunctionDescriptor) overridden, immediateSupertype);
                 if (found != null) {
                     return found;
                 }
@@ -117,10 +117,10 @@ public class SamAdapterOverridabilityCondition implements ExternalOverridability
     }
 
     private static class SamAdapterInfo {
-        private final SimpleFunctionDescriptor samAdapter;
+        private final ComplexFunctionDescriptor samAdapter;
         private final JetType ownerType;
 
-        private SamAdapterInfo(@NotNull SimpleFunctionDescriptor samAdapter, @NotNull JetType ownerType) {
+        private SamAdapterInfo(@NotNull ComplexFunctionDescriptor samAdapter, @NotNull JetType ownerType) {
             this.samAdapter = samAdapter;
             this.ownerType = ownerType;
         }

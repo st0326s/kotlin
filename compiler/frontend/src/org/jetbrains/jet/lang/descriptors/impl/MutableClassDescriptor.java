@@ -52,7 +52,7 @@ public class MutableClassDescriptor extends ClassDescriptorBase implements Class
     private final Set<CallableMemberDescriptor> declaredCallableMembers = Sets.newLinkedHashSet();
     private final Set<CallableMemberDescriptor> allCallableMembers = Sets.newLinkedHashSet(); // includes fake overrides
     private final Set<PropertyDescriptor> properties = Sets.newLinkedHashSet();
-    private final Set<SimpleFunctionDescriptor> functions = Sets.newLinkedHashSet();
+    private final Set<ComplexFunctionDescriptor> functions = Sets.newLinkedHashSet();
 
     private final WritableScope scopeForMemberResolution;
     // This scope contains type parameters but does not contain inner classes
@@ -204,7 +204,7 @@ public class MutableClassDescriptor extends ClassDescriptorBase implements Class
     }
 
     @NotNull
-    public Set<SimpleFunctionDescriptor> getFunctions() {
+    public Set<ComplexFunctionDescriptor> getFunctions() {
         return functions;
     }
 
@@ -333,7 +333,7 @@ public class MutableClassDescriptor extends ClassDescriptorBase implements Class
                 }
 
                 @Override
-                public void addFunctionDescriptor(@NotNull SimpleFunctionDescriptor functionDescriptor) {
+                public void addFunctionDescriptor(@NotNull ComplexFunctionDescriptor functionDescriptor) {
                     getScopeForMemberLookupAsWritableScope().addFunctionDescriptor(functionDescriptor);
                     functions.add(functionDescriptor);
                     if (functionDescriptor.getKind().isReal()) {

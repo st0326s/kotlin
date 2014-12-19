@@ -74,7 +74,7 @@ public class SamWrapperCodegen {
                 SourceElement.NO_SOURCE
         );
         // e.g. compare(T, T)
-        SimpleFunctionDescriptor erasedInterfaceFunction = samType.getAbstractMethod().getOriginal().copy(
+        ComplexFunctionDescriptor erasedInterfaceFunction = samType.getAbstractMethod().getOriginal().copy(
                 classDescriptor,
                 Modality.FINAL,
                 Visibilities.PUBLIC,
@@ -139,7 +139,7 @@ public class SamWrapperCodegen {
             Type ownerType,
             Type functionType,
             ClassBuilder cv,
-            SimpleFunctionDescriptor erasedInterfaceFunction,
+            ComplexFunctionDescriptor erasedInterfaceFunction,
             JetType functionJetType
     ) {
         // using static context to avoid creating ClassDescriptor and everything else
@@ -153,7 +153,7 @@ public class SamWrapperCodegen {
 
         // generate sam bridges
         // TODO: erasedInterfaceFunction is actually not an interface function, but function in generated class
-        SimpleFunctionDescriptor originalInterfaceErased = samType.getAbstractMethod().getOriginal();
+        ComplexFunctionDescriptor originalInterfaceErased = samType.getAbstractMethod().getOriginal();
         SimpleFunctionDescriptorImpl descriptorForBridges = SimpleFunctionDescriptorImpl
                 .create(erasedInterfaceFunction.getContainingDeclaration(), erasedInterfaceFunction.getAnnotations(), originalInterfaceErased.getName(),
                         CallableMemberDescriptor.Kind.DECLARATION, erasedInterfaceFunction.getSource());

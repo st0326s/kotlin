@@ -133,7 +133,7 @@ public class SingleAbstractMethodUtils {
         List<CallableMemberDescriptor> abstractMembers = getAbstractMembers(klass.getDefaultType());
         if (abstractMembers.size() == 1) {
             CallableMemberDescriptor member = abstractMembers.get(0);
-            if (member instanceof SimpleFunctionDescriptor) {
+            if (member instanceof ComplexFunctionDescriptor) {
                 return member.getTypeParameters().isEmpty();
             }
         }
