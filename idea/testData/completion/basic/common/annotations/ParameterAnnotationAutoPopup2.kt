@@ -1,8 +1,8 @@
 val v = 1
 
-fun foo([<caret>) { }
+fun foo([volatile i<caret>) { }
 
-// INVOCATION_COUNT: 1
+// INVOCATION_COUNT: 0
 // EXIST: inlineOptions
 // ABSENT: String
 // ABSENT: v
